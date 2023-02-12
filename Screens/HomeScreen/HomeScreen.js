@@ -4,24 +4,8 @@ import InputField from '../../Components/InputField'
 import { AppLogo, IconNotify, IconOption, IconSearch } from '../../assets/images'
 import { LinkMediumBold, TextSmall } from '../../assets/constants/Typography'
 import NewsCard from '../../Components/Card'
-import { DATA } from "../../assets/ExampleData"
 import Spacing from '../../Components/Spacing'
 import AxiosIntance from '../../utils/AxiosIntance'
-
-const DATATRENDING = [
-    {
-        "_id": "63bfa809c4f47f0016aee205",
-        "title": "Phasellus in felis. Donec semper sapien a libero. Nam dui.",
-        "content": "Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.",
-        "image": "https://cdn.tuoitre.vn/2022/8/21/z36603545985729afe273eca0b86d68c30c8be6d894cd1-16610703194001184506404.jpg",
-        "createdAt": "2023-01-12T06:26:17.539Z",
-        "createdBy": {
-            "_id": "63ac39aeedf7c80016c57a67",
-            "name": "TAVUX",
-            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"
-        }
-    }
-]
 
 const HomeScreen = ({ navigation }) => {
 
@@ -34,7 +18,7 @@ const HomeScreen = ({ navigation }) => {
     const handleFetchData = async () => {
         try {
             const res = await AxiosIntance().get("/articles");
-            console.log(res.data);
+            // console.log(res.data);
             if (!res.data.error) {
                 setDataList(res.data);
             }
@@ -85,10 +69,11 @@ const HomeScreen = ({ navigation }) => {
                 </InputField>
 
                 {/* header content */}
-                <View style={styles.headerContent}>
-                    <Text style={[LinkMediumBold, { color: "#000" }]}>Trending</Text>
-                    <Text style={[TextSmall]}>See all</Text>
-                </View>
+                {dataList.length > 0 &&
+                    <View style={styles.headerContent}>
+                        <Text style={[LinkMediumBold, { color: "#000" }]}>Trending</Text>
+                        <Text style={[TextSmall]}>See all</Text>
+                    </View>}
                 <View style={styles.topTrendingNews}>
                     {dataList.length > 0 &&
                         <NewsCard
@@ -98,16 +83,19 @@ const HomeScreen = ({ navigation }) => {
                             onPressNewsAuthor={() => { console.log("Press into news author"); }} />
                     }
                 </View>
-                <View style={styles.headerContent}>
-                    <Text style={[LinkMediumBold, { color: "#000" }]}>Latest</Text>
-                    <Text style={[TextSmall]}>See all</Text>
-                </View>
+                {dataList.length > 2 &&
+                    <View style={styles.headerContent}>
+                        <Text style={[LinkMediumBold, { color: "#000" }]}>Latest</Text>
+                        <Text style={[TextSmall]}>See all</Text>
+                    </View>}
                 <FlatList
                     ItemSeparatorComponent={<Spacing />}
                     data={dataList}
                     keyExtractor={item => item._id}
                     renderItem={handleRenderItem}
                     scrollEnabled={false}
+                    removeClippedSubviews={true}
+                    updateCellsBatchingPeriod={70}
                 />
             </ScrollView>
         </SafeAreaView >

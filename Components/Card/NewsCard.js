@@ -4,6 +4,7 @@ import ImageLoader from '../ImageLoader';
 import { LinkXSmallBold, TextMedium, TextXSmall } from '../../assets/constants/Typography';
 import { Colors } from '../../assets/constants/Colors';
 import { IconMoreOption, IconTime } from '../../assets/images';
+import FastImage from 'react-native-fast-image';
 
 const NewsCard = (
     {
@@ -12,7 +13,7 @@ const NewsCard = (
         onPressMoreButton = () => { },
     }) => {
 
-    const { _id, title, content, image, createdAt, createdBy } = data;
+    const { _id, title, image, createdAt, createdBy } = data;
     const [amountOfDate, setAmountOfDate] = useState({});
 
     const A_DAY = 24 * 60 * 60 * 1000; // mili giấy nên phải nhân cho 1000
@@ -30,6 +31,7 @@ const NewsCard = (
             return { type: 'y', value: Math.round(amountOfDate / 30 / 12) }
         }
     }
+
     useEffect(() => {
         setAmountOfDate(caculateAmountDate(createdAt));
     }, [])
@@ -41,11 +43,16 @@ const NewsCard = (
             { ...style }
         ]}>
             <Pressable onPress={onPress} style={{ width: horizontal ? 96 : "100%" }}>
-                <ImageLoader source={image} borderRadius={6} style={{
-                    width: horizontal ? 96 : "100%",
+                {/* <ImageLoader source={image} borderRadius={6} style={{
+                    width: "100%",
                     height: horizontal ? 96 : 183,
                     ...styles.imageNewsStyle
-                }} />
+                }} /> */}
+                <FastImage
+                    style={{ borderRadius: 6, width: "100%", height: horizontal ? 96 : 183 }}
+                    source={{ uri: image }}
+                    fallback={true}
+                    resizeMode={FastImage.resizeMode.cover} />
             </Pressable>
             <View style={[styles.contentContainer, { marginStart: horizontal ? 4 : 0 }]}>
                 <Text style={[TextXSmall, styles.categoryNews, { marginTop: horizontal ? 0 : 8 }]}>Europe</Text>
@@ -57,12 +64,12 @@ const NewsCard = (
                         <Pressable onPress={onPressNewsAuthor}>
                             <View style={styles.authorContainer}>
                                 <ImageLoader circleRounder source={createdBy.avatar ? createdBy.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"} style={styles.creatorAvatarStyle} />
-                                <Text numberOfLines={1} style={[LinkXSmallBold, { maxWidth: 100 }]}>{createdBy.name ? createdBy.name : "TAVUX"}</Text>
+                                <Text numberOfLines={1} style={[LinkXSmallBold, { maxWidth: 100 }]}>{createdBy.name ? createdBy.name : "VA"}</Text>
                             </View>
                         </Pressable>
                         <View style={styles.timeContainer}>
                             <IconTime />
-                            <Text style={[TextXSmall, styles.timeCreate]}>{amountOfDate.value}{amountOfDate.type} ago</Text>
+                            <Text style={[TextXSmall, styles.timeCreate]}>{amountOfDate?.value}{amountOfDate?.type} ago</Text>
                         </View>
                     </View>
                     <View style={styles.rightContainer}>

@@ -9,6 +9,7 @@ import { Colors } from '../../assets/constants/Colors';
 import { DATA } from '../../assets/ExampleData';
 import NewsCard from '../../Components/Card/NewsCard';
 import Spacing from '../../Components/Spacing';
+import FastImage from 'react-native-fast-image'
 
 const DetailScreen = ({ navigation, route }) => {
 
@@ -25,7 +26,7 @@ const DetailScreen = ({ navigation, route }) => {
     }
 
     console.log(count.current++);
-
+    console.log(params.image);
     const hanleRenderItem = ({ item }) => (
         <NewsCard
             key={item._id} data={item} horizontal
@@ -57,7 +58,12 @@ const DetailScreen = ({ navigation, route }) => {
                         <TopicAuthorCard authorCard data={params} />
                     </View>
                     <View style={styles.newsContent}>
-                        <ImageLoader source={params?.image} style={{ width: "100%", height: 245 }} borderRadius={6} />
+                        <FastImage
+                            source={{ uri: params?.image }}
+                            style={{ width: "100%", height: 245, borderRadius: 6 }}
+                            fallback={true}
+                            resizeMode={FastImage.resizeMode.cover} />
+
                         <Text style={[TextSmall, { marginTop: 13, color: Colors.bodyText }]}>{params?.category ? params?.category : "Europe"}</Text>
                         <Text style={[DisplaySmallRegular, { marginTop: 13, color: "#000" }]}>{params?.title}</Text>
                         <Text style={[TextMedium, { marginTop: 13, color: Colors.bodyText }]}>{params?.content}</Text>
@@ -67,13 +73,16 @@ const DetailScreen = ({ navigation, route }) => {
                             <Text style={[LinkMediumBold, { color: "#000" }]}>Latest</Text>
                             <Text style={[TextSmall]}>See all</Text>
                         </View>
-                        {/* <FlatList
+                        <FlatList
                             ItemSeparatorComponent={<Spacing />}
                             data={DATA}
                             keyExtractor={item => item._id}
                             renderItem={hanleRenderItem}
                             scrollEnabled={false}
-                        /> */}
+                            removeClippedSubviews={true}
+                            updateCellsBatchingPeriod={70}
+                            initialNumToRender={2}
+                        />
                     </View>
                 </ScrollView>
             </View>

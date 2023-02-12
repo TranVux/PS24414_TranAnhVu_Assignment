@@ -7,11 +7,11 @@ import { LinkMediumBold, TextMedium, TextSmall } from '../../assets/constants/Ty
 import { Colors } from '../../assets/constants/Colors'
 import ImageLoader from '../ImageLoader'
 import { } from '../../assets/constants/Typography'
+import FastImage from 'react-native-fast-image'
 
 const TopicAuthorCard = ({ authorCard = true, topicCard, isFollow = false, isSave, onPress = () => { }, onPressButton = () => { }, style, data }) => {
 
     const [amountOfDate, setAmountOfDate] = useState({});
-
 
     const A_DAY = 24 * 60 * 60 * 1000; // mili giấy nên phải nhân cho 1000
     function caculateAmountDate(createdAt) {
@@ -38,7 +38,8 @@ const TopicAuthorCard = ({ authorCard = true, topicCard, isFollow = false, isSav
             {/* {topicCard && authorCard*/}
             <View style={styles.leftCardContainer}>
                 <View style={styles.lefContent}>
-                    <ImageLoader circleRounder={topicCard ? false : true} source={topicCard ? data?.image : data?.createdBy?.avatar ? data.createdBy.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"} borderRadius={topicCard ? 6 : 1000} style={{ width: topicCard ? 70 : 50, height: topicCard ? 70 : 50 }} />
+                    <FastImage source={{ uri: topicCard ? data?.image : data?.createdBy?.avatar ? data.createdBy.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU" }}
+                        style={{ width: topicCard ? 70 : 50, height: topicCard ? 70 : 50, borderRadius: topicCard ? 6 : 10000 }} />
                 </View>
                 <View style={styles.rightContent}>
                     {topicCard &&
@@ -100,7 +101,6 @@ const styles = StyleSheet.create({
         height: 50,
         alignItems: "center",
         flexDirection: "row",
-        // backgroundColor: "red",
         justifyContent: "flex-end"
     },
     textButton: {
