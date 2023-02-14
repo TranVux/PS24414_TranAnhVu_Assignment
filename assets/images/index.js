@@ -618,6 +618,31 @@ function IconHeartOutline(props) {
     )
 }
 
+function IconSetting(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_82_10018)">
+                <Path
+                    d="M12 1l9.5 5.5v11L12 23l-9.5-5.5v-11L12 1zm0 2.311L4.5 7.653v8.694l7.5 4.342 7.5-4.342V7.653L12 3.311zM12 16a4 4 0 110-8 4 4 0 010 8zm0-2a2 2 0 100-4 2 2 0 000 4z"
+                    fill="#050505"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_82_10018">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
 const FallBackImage = require("./fallback.png")
 
-export { IconHeartFill, IconPlus, IconShare, IconProfile, IconProfileActive, IconBookmarkActive, IconExplore, IconExploreActive, IconHomeActive, IconHome, IconBookmark, IconHeartOutline, IconCommentOutline, IconMoreOption, IconTime, AppLogo, IconNotify, IconHidePassword, IconClose, IconWarning, IconGoogle, IconFacebook, IconBack, IconChangeAvatar, FallBackImage, IconSearch, IconOption }
+export { IconSetting, IconHeartFill, IconPlus, IconShare, IconProfile, IconProfileActive, IconBookmarkActive, IconExplore, IconExploreActive, IconHomeActive, IconHome, IconBookmark, IconHeartOutline, IconCommentOutline, IconMoreOption, IconTime, AppLogo, IconNotify, IconHidePassword, IconClose, IconWarning, IconGoogle, IconFacebook, IconBack, IconChangeAvatar, FallBackImage, IconSearch, IconOption }
