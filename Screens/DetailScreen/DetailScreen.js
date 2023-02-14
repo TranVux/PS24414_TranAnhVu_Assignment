@@ -1,7 +1,7 @@
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { IconBack, IconBookmark, IconCommentOutline, IconHeartFill, IconHeartOutline, IconMoreOption, IconShare } from '../../assets/images';
+import { IconBack, IconBookmark, IconBookmarkActive, IconCommentOutline, IconHeartFill, IconHeartOutline, IconMoreOption, IconShare } from '../../assets/images';
 import TopicAuthorCard from '../../Components/TopicAuthorCard';
 import ImageLoader from '../../Components/ImageLoader';
 import { DisplaySmallRegular, LinkMediumBold, TextMedium, TextSmall } from '../../assets/constants/Typography';
@@ -10,23 +10,30 @@ import { DATA } from '../../assets/ExampleData';
 import NewsCard from '../../Components/Card/NewsCard';
 import Spacing from '../../Components/Spacing';
 import FastImage from 'react-native-fast-image'
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
 const DetailScreen = ({ navigation, route }) => {
 
     const { params } = route;
     //re-render count 
-    const count = useRef(0);
+    // const count = useRef(0);
     // initial value is provided by data from route
     const [isHeart, setIsHeart] = useState(false);
+    const [isBookmark, setIsBookmark] = useState(false);
 
     const handleIconHearth = () => {
         let tempIsHeart = isHeart;
         setIsHeart(!tempIsHeart);
-        console.log(isHeart);
+        // console.log(isHeart);
     }
 
-    console.log(count.current++);
-    console.log(params.image);
+    const handleIconBookMark = () => {
+        let tempIsBookmark = isBookmark;
+        setIsBookmark(!tempIsBookmark);
+    }
+
+    // console.log(count.current++);
+    // console.log(params.image);
     const hanleRenderItem = ({ item }) => (
         <NewsCard
             key={item._id} data={item} horizontal
@@ -93,11 +100,15 @@ const DetailScreen = ({ navigation, route }) => {
             <View style={styles.actionContainer}>
                 <View style={styles.leftAction}>
                     <View style={styles.fDRowCenter}>
-                        <Pressable onPress={handleIconHearth}>
-                            {isHeart && <IconHeartFill />}
-                            {!isHeart && <IconHeartOutline />}
-                        </Pressable>
-                        <Text style={[TextMedium, { marginStart: 6, color: "#000" }]}>25K</Text>
+                        <BouncyCheckbox
+                            textStyle={[{ marginStart: -10, textDecorationLine: "none", color: "#000" }, TextMedium]}
+                            innerIconStyle={{ borderWidth: 0 }}
+                            fillColor="#fff"
+                            unfillColor='#fff'
+                            onPress={handleIconHearth}
+                            iconComponent={isHeart ? <IconHeartFill /> : <IconHeartOutline />}
+                            text="25K" />
+                        {/* <Text style={[TextMedium, { marginStart: 6, color: "#000" }]}>25K</Text> */}
                     </View>
                     <View style={[styles.fDRowCenter, { marginStart: 30 }]}>
                         <Pressable>
@@ -107,7 +118,12 @@ const DetailScreen = ({ navigation, route }) => {
                     </View>
                 </View>
                 <View style={styles.rightAction}>
-                    <IconBookmark />
+                    <BouncyCheckbox
+                        innerIconStyle={{ borderWidth: 0 }}
+                        fillColor="#fff"
+                        unfillColor='#fff'
+                        onPress={handleIconBookMark}
+                        iconComponent={isBookmark ? <IconBookmarkActive /> : <IconBookmark />} />
                 </View>
             </View>
         </SafeAreaView>
@@ -186,7 +202,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-end",
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: 30
     },
     headerContent: {
         flexDirection: "row",
