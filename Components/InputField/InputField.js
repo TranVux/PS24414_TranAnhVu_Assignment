@@ -29,8 +29,7 @@ const InputField = (
 
     const handleShowPassword = () => {
         let tempShowText = showText;
-        tempShowText = !tempShowText;
-        setshowText(tempShowText);
+        setshowText(!tempShowText);
     }
 
     const handleChangeText = (newText) => {

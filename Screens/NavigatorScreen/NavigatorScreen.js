@@ -1,15 +1,17 @@
 import { StyleSheet, } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { IconBookmark, IconBookmarkActive, IconExplore, IconExploreActive, IconHome, IconHomeActive, IconProfile, IconProfileActive } from '../../assets/images'
 import HomeScreen from '../HomeScreen';
 import ExploreScreen from '../ExploreScreen';
 import BookmarkScreen from '../BookmarkScreen';
 import ProfileScreen from '../ProfileScreen';
+import { AppContext } from '../../utils/AppContext';
 
 const Tab = createBottomTabNavigator();
 
 const NavigatorScreen = () => {
+
     return (
         <Tab.Navigator screenOptions={{ headerShown: false }} sceneContainerStyle={styles.container}>
             <Tab.Screen options={{

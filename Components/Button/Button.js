@@ -3,7 +3,7 @@ import React from 'react'
 import { Colors } from '../../assets/constants/Colors';
 
 const Button = ({ children, width, height, style, primary, secondary, outline, onPress = () => { } }) => {
-    console.log(width);
+    // console.log(width);
     return (
         <Pressable
             style={[

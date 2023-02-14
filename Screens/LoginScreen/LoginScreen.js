@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, ToastAndroid } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import InputField from '../../Components/InputField'
 import { Colors } from '../../assets/constants/Colors'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
@@ -9,11 +9,13 @@ import { DisplayLargeBold, LinkMediumBold, TextLarge, TextSmall } from '../../as
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import AxiosIntance from '../../utils/AxiosIntance'
+import { AppContext } from '../../utils/AppContext'
 
 const LoginScreen = ({ navigation }) => {
 
     const [usename, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const { isLogin, setIsLogin } = useContext(AppContext);
 
     const handleLogin = async (usename, password) => {
         try {
@@ -25,7 +27,8 @@ const LoginScreen = ({ navigation }) => {
             if (!responseLogin.data.error) {
                 await AsyncStorage.setItem("token", responseLogin.data.token);
                 console.log(responseLogin.data.token);
-                navigation.navigate("NavigatorScreen");
+                // navigation.navigate("NavigatorScreen");
+                setIsLogin(true);
                 ToastAndroid.show("Đăng nhập thành công", ToastAndroid.SHORT);
             } else {
                 ToastAndroid.show("Đăng nhập thất bại. Kiểm tra lại username và password", ToastAndroid.SHORT);
@@ -38,12 +41,12 @@ const LoginScreen = ({ navigation }) => {
 
     const handleUserNameChange = (usename) => {
         setUsername(usename);
-        console.log(usename);
+        // console.log(usename);
     }
 
     const handlePasswordChange = (password) => {
         setPassword(password);
-        console.log(password);
+        // console.log(password);
     }
 
     return (

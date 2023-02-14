@@ -35,6 +35,10 @@ const DetailScreen = ({ navigation, route }) => {
             onPressNewsAuthor={() => { console.log("Press into news author"); }} />
     )
 
+    const getKey = (item) => {
+        return item._id;
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.headerContainer}>
@@ -76,7 +80,7 @@ const DetailScreen = ({ navigation, route }) => {
                         <FlatList
                             ItemSeparatorComponent={<Spacing />}
                             data={DATA}
-                            keyExtractor={item => item._id}
+                            keyExtractor={getKey}
                             renderItem={hanleRenderItem}
                             scrollEnabled={false}
                             removeClippedSubviews={true}

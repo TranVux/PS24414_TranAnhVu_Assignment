@@ -18,8 +18,8 @@ const HomeScreen = ({ navigation }) => {
     const handleFetchData = async () => {
         try {
             const res = await AxiosIntance().get("/articles");
-            // console.log(res.data);
-            if (!res.data.error) {
+            // console.log(res);
+            if (!res.error) {
                 setDataList(res.data);
             }
         } catch (err) {
@@ -42,6 +42,10 @@ const HomeScreen = ({ navigation }) => {
                     onPressNewsAuthor={() => { console.log("Press into news author"); }} />
             )
         }
+    }
+
+    const getKey = (item) => {
+        return item._id;
     }
 
     return (
@@ -91,7 +95,7 @@ const HomeScreen = ({ navigation }) => {
                 <FlatList
                     ItemSeparatorComponent={<Spacing />}
                     data={dataList}
-                    keyExtractor={item => item._id}
+                    keyExtractor={getKey}
                     renderItem={handleRenderItem}
                     scrollEnabled={false}
                     removeClippedSubviews={true}
