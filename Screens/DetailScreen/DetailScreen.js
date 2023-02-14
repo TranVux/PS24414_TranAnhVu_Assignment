@@ -15,16 +15,12 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 const DetailScreen = ({ navigation, route }) => {
 
     const { params } = route;
-    //re-render count 
-    // const count = useRef(0);
-    // initial value is provided by data from route
     const [isHeart, setIsHeart] = useState(false);
     const [isBookmark, setIsBookmark] = useState(false);
 
     const handleIconHearth = () => {
         let tempIsHeart = isHeart;
         setIsHeart(!tempIsHeart);
-        // console.log(isHeart);
     }
 
     const handleIconBookMark = () => {
@@ -32,8 +28,6 @@ const DetailScreen = ({ navigation, route }) => {
         setIsBookmark(!tempIsBookmark);
     }
 
-    // console.log(count.current++);
-    // console.log(params.image);
     const hanleRenderItem = ({ item }) => (
         <NewsCard
             key={item._id} data={item} horizontal

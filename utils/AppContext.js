@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useEffect, useState } from "react";
+import SplashScreen from "../Screens/SplashScreen";
 
 export const AppContext = createContext();
 
@@ -18,7 +19,9 @@ export const AppContextProvider = (props) => {
     }, [])
 
     if (isLogin === null) {
-        return null;
+        return (
+            <SplashScreen />
+        );
     }
 
     return (

@@ -1,15 +1,23 @@
 import { Pressable, SafeAreaView, StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import InputField from '../../Components/InputField'
-import { AppLogo, IconNotify, IconOption, IconSearch } from '../../assets/images'
+import { AppLogo, IconClose, IconNotify, IconOption, IconSearch } from '../../assets/images'
 import { LinkMediumBold, TextSmall } from '../../assets/constants/Typography'
 import NewsCard from '../../Components/Card'
 import Spacing from '../../Components/Spacing'
 import AxiosIntance from '../../utils/AxiosIntance'
+import { Skeleton } from '@rneui/themed'
+import ItemLoading from '../../Components/ItemLoading'
 
 const HomeScreen = ({ navigation }) => {
 
     const [dataList, setDataList] = useState([]);
+    const [searchValue, setSearchValue] = useState("");
+    const [dataListLastest, setDataListLastest] = useState([]);
+
+    const handleSearchValue = (newText) => {
+        setSearchValue(newText);
+    }
 
     const handleOnClickNews = (data) => {
         navigation.navigate('DetailScreen', { ...data });
@@ -71,36 +79,44 @@ const HomeScreen = ({ navigation }) => {
                     <IconSearch iconLeft />
                     <IconOption iconRight />
                 </InputField>
-
                 {/* header content */}
-                {dataList.length > 0 &&
-                    <View style={styles.headerContent}>
-                        <Text style={[LinkMediumBold, { color: "#000" }]}>Trending</Text>
-                        <Text style={[TextSmall]}>See all</Text>
-                    </View>}
+                <View style={[styles.headerContent]}>
+                    <Text style={[LinkMediumBold, { color: "#000" }]}>Trending</Text>
+                    <Text style={[TextSmall]}>See all</Text>
+                </View>
+
                 <View style={styles.topTrendingNews}>
-                    {dataList.length > 0 &&
+                    {dataList.length > 0 ?
                         <NewsCard
                             vertical data={dataList[0]}
                             onPress={() => { handleOnClickNews(dataList[0]) }}
                             onPressMoreButton={() => { console.log("Press into more button"); }}
                             onPressNewsAuthor={() => { console.log("Press into news author"); }} />
+                        :
+                        <ItemLoading vertical={true} />
                     }
                 </View>
-                {dataList.length > 2 &&
-                    <View style={styles.headerContent}>
-                        <Text style={[LinkMediumBold, { color: "#000" }]}>Latest</Text>
-                        <Text style={[TextSmall]}>See all</Text>
-                    </View>}
-                <FlatList
-                    ItemSeparatorComponent={<Spacing />}
-                    data={dataList}
-                    keyExtractor={getKey}
-                    renderItem={handleRenderItem}
-                    scrollEnabled={false}
-                    removeClippedSubviews={true}
-                    updateCellsBatchingPeriod={70}
-                />
+                <View style={[styles.headerContent, { marginVertical: 0, marginTop: 16 }]}>
+                    <Text style={[LinkMediumBold, { color: "#000" }]}>Latest</Text>
+                    <Text style={[TextSmall]}>See all</Text>
+                </View>
+                {
+                    dataList.length > 2 ?
+                        <FlatList
+                            ItemSeparatorComponent={<Spacing />}
+                            data={dataList}
+                            keyExtractor={getKey}
+                            renderItem={handleRenderItem}
+                            scrollEnabled={false}
+                            removeClippedSubviews={true}
+                            updateCellsBatchingPeriod={70}
+                        /> :
+                        <>
+                            <ItemLoading />
+                            <ItemLoading />
+                            <ItemLoading />
+                        </>
+                }
             </ScrollView>
         </SafeAreaView >
     )
