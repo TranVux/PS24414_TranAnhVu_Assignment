@@ -10,6 +10,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Spacing from '../../Components/Spacing'
 import { DATA } from '../../assets/ExampleData'
 import NewsCard from '../../Components/Card/NewsCard'
+import { Skeleton } from '@rneui/themed'
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -132,42 +133,48 @@ const ProfileScreen = ({ navigation }) => {
                 </View>
             </View>
             <View style={styles.buttonContainer}>
-                <Button primary style={styles.button}>
+                <Button
+                    onPress={() => { navigation.navigate("EditProfileScreen") }}
+                    primary style={styles.button}>
                     <Text style={[LinkMediumBold, { color: "#fff" }]}>Edit Profile</Text>
                 </Button>
-                <Button primary style={styles.button}>
+                <Button
+                    primary style={styles.button}>
                     <Text style={[LinkMediumBold, { color: "#fff" }]}>Website</Text>
                 </Button>
             </View>
             <View style={styles.contentContainer}>
-                <Tab.Navigator screenOptions={{
-                    tabBarIndicatorStyle: {
-                        borderBottomWidth: 3,
-                        borderColor: Colors.primaryColor,
-                        borderRadius: 2,
-                    },
-                    tabBarIndicatorContainerStyle: {
-                        marginHorizontal: 20,
-                        paddingHorizontal: 40
-                    },
-                    tabBarLabelStyle: {
-                        textTransform: 'capitalize',
-                        ...TextMedium,
-                        fontSize: 14,
-                    },
-                    tabBarActiveTintColor: "#000",
-                    tabBarInactiveTintColor: Colors.bodyText,
-                    tabBarStyle: {
-                        width: 160,
-                        elevation: 0,
-                        alignSelf: "center"
-                    },
-                    tabBarItemStyle: {
-                        width: 80,
-                        height: 50,
-                    },
-                    tabBarPressColor: "transparent"
-                }}>
+                <Tab.Navigator
+                    screenOptions={{
+                        tabBarIndicatorStyle: {
+                            borderBottomWidth: 3,
+                            borderColor: Colors.primaryColor,
+                            borderRadius: 2,
+                        },
+                        tabBarIndicatorContainerStyle: {
+                            marginHorizontal: 20,
+                            paddingHorizontal: 40
+                        },
+                        tabBarLabelStyle: {
+                            textTransform: 'capitalize',
+                            ...TextMedium,
+                            fontSize: 14,
+                        },
+                        tabBarActiveTintColor: "#000",
+                        tabBarInactiveTintColor: Colors.bodyText,
+                        tabBarStyle: {
+                            width: 160,
+                            elevation: 0,
+                            alignSelf: "center"
+                        },
+                        tabBarItemStyle: {
+                            width: 80,
+                            height: 50,
+                        },
+                        tabBarPressColor: "transparent",
+                        lazy: true,
+                        lazyPlaceholder: () => <Skeleton width={"100%"} height={"100%"} />
+                    }}>
                     <Tab.Screen component={MyNewsScreen} name="News" />
                     <Tab.Screen component={RecentNewsScreen} name="Recent" />
                 </Tab.Navigator>

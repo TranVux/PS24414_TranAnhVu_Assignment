@@ -8,6 +8,7 @@ import FillProfileScreen from '../Screens/FillProfileScreen'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { AppContext } from './AppContext'
 import CreationScreen from '../Screens/CreationScreen'
+import EditProfileScreen from '../Screens/EditProfileScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -25,10 +26,11 @@ const AppNavigator = () => {
                         <Stack.Screen component={RegisterScreen} name='RegisterScreen' />
                     </> :
                     <>
-                        <Stack.Screen component={CreationScreen} name="CreationScreen" />
                         <Stack.Screen component={NavigatorScreen} name='NavigatorScreen' />
                         <Stack.Screen component={DetailScreen} name='DetailScreen' />
                         <Stack.Screen component={FillProfileScreen} name='FillProfileScreen' />
+                        <Stack.Screen component={CreationScreen} name="CreationScreen" />
+                        <Stack.Screen component={EditProfileScreen} name="EditProfileScreen" />
                     </>
             }
         </Stack.Navigator>

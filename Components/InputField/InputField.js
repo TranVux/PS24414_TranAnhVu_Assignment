@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     input: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 6,
         flex: 1,
         position: 'relative',
