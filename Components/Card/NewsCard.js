@@ -5,6 +5,7 @@ import { LinkXSmallBold, TextMedium, TextXSmall } from '../../assets/constants/T
 import { Colors } from '../../assets/constants/Colors';
 import { IconMoreOption, IconTime } from '../../assets/images';
 import FastImage from 'react-native-fast-image';
+import { Fallback } from '../../assets/constants/Fallback';
 
 const NewsCard = (
     {
@@ -14,6 +15,7 @@ const NewsCard = (
     }) => {
 
     const { _id, title, image, createdAt, createdBy } = data;
+
     const [amountOfDate, setAmountOfDate] = useState({});
 
     const A_DAY = 24 * 60 * 60 * 1000; // mili giấy nên phải nhân cho 1000
@@ -50,7 +52,7 @@ const NewsCard = (
                 }} /> */}
                 <FastImage
                     style={{ borderRadius: 6, width: "100%", height: horizontal ? 96 : 183 }}
-                    source={{ uri: image }}
+                    source={{ uri: image ? image : Fallback.newImage }}
                     fallback={true}
                     resizeMode={FastImage.resizeMode.cover} />
             </Pressable>
@@ -63,7 +65,7 @@ const NewsCard = (
                     <View style={styles.leftContainer}>
                         <Pressable onPress={onPressNewsAuthor}>
                             <View style={styles.authorContainer}>
-                                <ImageLoader circleRounder source={createdBy.avatar ? createdBy.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"} style={styles.creatorAvatarStyle} />
+                                <ImageLoader circleRounder source={createdBy.avatar ? createdBy.avatar : Fallback.authorImage} style={styles.creatorAvatarStyle} />
                                 <Text numberOfLines={1} style={[LinkXSmallBold, { maxWidth: 100 }]}>{createdBy.name ? createdBy.name : "VA"}</Text>
                             </View>
                         </Pressable>

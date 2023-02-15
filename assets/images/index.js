@@ -284,8 +284,8 @@ function IconTime(props) {
 function IconMoreOption(props) {
     return (
         <Svg
-            width={props.width ? props.width : 12}
-            height={props.height ? props.height : 2}
+            width={12}
+            height={2}
             viewBox="0 0 12 2"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -316,24 +316,6 @@ function IconBookmark(props) {
         </Svg>
     )
 }
-
-// function IconHeartOutline(props) {
-//     return (
-//         <Svg
-//             width={20}
-//             height={19}
-//             viewBox="0 0 20 19"
-//             fill="none"
-//             xmlns="http://www.w3.org/2000/svg"
-//             {...props}
-//         >
-//             <Path
-//                 d="M14.5 0C17.538 0 20 2.5 20 6c0 7-7.5 11-10 12.5C7.5 17 0 13 0 6c0-3.5 2.5-6 5.5-6C7.36 0 9 1 10 2c1-1 2.64-2 4.5-2zm-3.566 15.604a26.953 26.953 0 002.42-1.701C16.335 11.533 18 8.943 18 6c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L10 4.828 8.586 3.414C7.74 2.57 6.576 2 5.5 2 3.56 2 2 3.656 2 6c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z"
-//                 fill="#4E4B66"
-//             />
-//         </Svg>
-//     )
-// }
 
 function IconCommentOutline(props) {
     return (
@@ -643,6 +625,106 @@ function IconSetting(props) {
     )
 }
 
+function IconAddPic(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_85_5127)">
+                <Path
+                    d="M4.828 21l-.02.02-.021-.02H2.992A.993.993 0 012 20.007V3.993A1 1 0 012.992 3h18.016c.548 0 .992.445.992.993v16.014a1 1 0 01-.992.993H4.828zM20 15V5H4v14L14 9l6 6zm0 2.828l-6-6L6.828 19H20v-1.172zM8 11a2 2 0 110-4 2 2 0 010 4z"
+                    fill="#4E4B66"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_85_5127">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconTypography(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_85_5116)">
+                <Path
+                    d="M11.246 15H4.754l-2 5H.6L7 4h2l6.4 16h-2.154l-2-5zm-.8-2L8 6.885 5.554 13h4.892zM21 12.535V12h2v8h-2v-.535a4 4 0 110-6.93zM19 18a2 2 0 100-4 2 2 0 000 4z"
+                    fill="#4E4B66"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_85_5116">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconTextAlign(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_85_5132)">
+                <Path
+                    d="M3 4h18v2H3V4zm0 15h14v2H3v-2zm0-5h18v2H3v-2zm0-5h14v2H3V9z"
+                    fill="#4E4B66"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_85_5132">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconEdit(props) {
+    return (
+        <Svg
+            width={14}
+            height={14}
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_88_6878)">
+                <Path
+                    d="M9.175 5.65l-.825-.825-5.433 5.433v.825h.825L9.175 5.65zm.824-.825l.825-.824L10 3.176 9.175 4l.824.824zM4.224 12.25H1.75V9.775l7.837-7.837a.583.583 0 01.825 0l1.65 1.65a.584.584 0 010 .825L4.225 12.25z"
+                    fill="#4E4B66"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_88_6878">
+                    <Path fill="#fff" d="M0 0H14V14H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
 const FallBackImage = require("./fallback.png")
 
-export { IconSetting, IconHeartFill, IconPlus, IconShare, IconProfile, IconProfileActive, IconBookmarkActive, IconExplore, IconExploreActive, IconHomeActive, IconHome, IconBookmark, IconHeartOutline, IconCommentOutline, IconMoreOption, IconTime, AppLogo, IconNotify, IconHidePassword, IconClose, IconWarning, IconGoogle, IconFacebook, IconBack, IconChangeAvatar, FallBackImage, IconSearch, IconOption }
+export { IconEdit, IconAddPic, IconTextAlign, IconTypography, IconSetting, IconHeartFill, IconPlus, IconShare, IconProfile, IconProfileActive, IconBookmarkActive, IconExplore, IconExploreActive, IconHomeActive, IconHome, IconBookmark, IconHeartOutline, IconCommentOutline, IconMoreOption, IconTime, AppLogo, IconNotify, IconHidePassword, IconClose, IconWarning, IconGoogle, IconFacebook, IconBack, IconChangeAvatar, FallBackImage, IconSearch, IconOption }

@@ -11,6 +11,7 @@ import NewsCard from '../../Components/Card/NewsCard';
 import Spacing from '../../Components/Spacing';
 import FastImage from 'react-native-fast-image'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { Fallback } from '../../assets/constants/Fallback';
 
 const DetailScreen = ({ navigation, route }) => {
 
@@ -64,7 +65,7 @@ const DetailScreen = ({ navigation, route }) => {
                     </View>
                     <View style={styles.newsContent}>
                         <FastImage
-                            source={{ uri: params?.image }}
+                            source={{ uri: params?.image ? params.image : Fallback.newImage }}
                             style={{ width: "100%", height: 245, borderRadius: 6 }}
                             fallback={true}
                             resizeMode={FastImage.resizeMode.cover} />

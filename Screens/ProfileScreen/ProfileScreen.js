@@ -173,7 +173,7 @@ const ProfileScreen = ({ navigation }) => {
                 </Tab.Navigator>
             </View>
             <View style={styles.floatingButtonContainer}>
-                <Button style={styles.floatingButton} onPress={() => { console.log("Floating action button"); }}>
+                <Button style={styles.floatingButton} onPress={() => { navigation.navigate("CreationScreen") }}>
                     <IconPlus colorBg="#fff" />
                 </Button>
             </View>

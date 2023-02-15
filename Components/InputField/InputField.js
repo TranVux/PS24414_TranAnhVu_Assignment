@@ -75,6 +75,7 @@ const InputField = (
                     cursorColor={inputState === INPUTSTATE.NORMAL ? Colors.bodyText : Colors.errorDark}
                     onFocus={handleInputFocus}
                     onBlur={handleInputFocus}
+                    placeholderTextColor={Colors.placeHolder}
                     style={[
                         TextSmall,
                         styles.input,

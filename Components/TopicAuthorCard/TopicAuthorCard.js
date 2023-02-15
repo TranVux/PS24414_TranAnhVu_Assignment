@@ -2,12 +2,13 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Button from '../Button'
-import { IconPlus } from '../../assets/images'
+import { FallBackImage, IconPlus } from '../../assets/images'
 import { LinkMediumBold, TextMedium, TextSmall } from '../../assets/constants/Typography'
 import { Colors } from '../../assets/constants/Colors'
 import ImageLoader from '../ImageLoader'
 import { } from '../../assets/constants/Typography'
 import FastImage from 'react-native-fast-image'
+import { Fallback } from '../../assets/constants/Fallback'
 
 const TopicAuthorCard = ({ authorCard = true, topicCard, isFollow = false, isSave, onPress = () => { }, onPressButton = () => { }, style, data }) => {
 
@@ -38,7 +39,7 @@ const TopicAuthorCard = ({ authorCard = true, topicCard, isFollow = false, isSav
             {/* {topicCard && authorCard*/}
             <View style={styles.leftCardContainer}>
                 <View style={styles.lefContent}>
-                    <FastImage source={{ uri: topicCard ? data?.image : data?.createdBy?.avatar ? data.createdBy.avatar : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU" }}
+                    <FastImage source={{ uri: topicCard ? data?.image : data?.createdBy?.avatar ? data.createdBy.avatar : Fallback.authorImage }}
                         style={{ width: topicCard ? 70 : 50, height: topicCard ? 70 : 50, borderRadius: topicCard ? 6 : 10000 }} />
                 </View>
                 <View style={styles.rightContent}>
