@@ -25,10 +25,10 @@ const AppNavigator = () => {
                         <Stack.Screen component={RegisterScreen} name='RegisterScreen' />
                     </> :
                     <>
+                        <Stack.Screen component={CreationScreen} name="CreationScreen" />
                         <Stack.Screen component={NavigatorScreen} name='NavigatorScreen' />
                         <Stack.Screen component={DetailScreen} name='DetailScreen' />
                         <Stack.Screen component={FillProfileScreen} name='FillProfileScreen' />
-                        <Stack.Screen component={CreationScreen} name="CreationScreen" />
                     </>
             }
         </Stack.Navigator>

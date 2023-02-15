@@ -1,12 +1,13 @@
-import { Pressable, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, TextInput, ToastAndroid, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { IconAddPic, IconBack, IconEdit, IconMoreOption, IconPlus, IconTextAlign, IconTypography } from '../../assets/images'
-import { DisplaySmallRegular, LinkMediumBold, TextMedium, TextSmall } from '../../assets/constants/Typography'
+import { DisplaySmallRegular, LinkMediumBold, TextLarge, TextMedium, TextSmall } from '../../assets/constants/Typography'
 import { Colors } from '../../assets/constants/Colors'
 import Button from '../../Components/Button'
 import FastImage from 'react-native-fast-image';
+import Dialog from "react-native-dialog";
 
 const CreationScreen = ({ navigation }) => {
 
@@ -14,6 +15,7 @@ const CreationScreen = ({ navigation }) => {
     const [textTitle, setTextTitle] = useState("");
     const [textArticle, setTextArticle] = useState("");
     const [uriImage, setUriImage] = useState({});
+    const [dialogDisplay, setDialogDisplay] = useState(false);
 
     const handleButtonPublish = () => {
         if (textArticle.length > 0 && textTitle.length > 0 && JSON.stringify(uriImage) !== "{}") {
@@ -63,6 +65,7 @@ const CreationScreen = ({ navigation }) => {
             console.log(res.assets[0].uri);
             // console.log(uriImage);
         }
+        setDialogDisplay(false)
     }
 
     return (
@@ -83,14 +86,14 @@ const CreationScreen = ({ navigation }) => {
                             <View style={{ width: "100%", height: 183 }}>
                                 <FastImage source={uriImage} resizeMode="cover" style={styles.imageStyle} />
                                 <Pressable style={styles.iconEdit}
-                                    onPress={() => { handleUriImage("Gallery") }}>
+                                    onPress={() => { setDialogDisplay(true) }}>
                                     <IconEdit />
                                 </Pressable>
                             </View>
                             :
                             <Pressable
                                 style={{ justifyContent: "center", alignItems: "center" }}
-                                onPress={() => { handleUriImage("Camera") }}>
+                                onPress={() => { setDialogDisplay(true) }}>
                                 <IconPlus colorBg={Colors.bodyText} />
                                 <Text style={[TextSmall, { color: Colors.bodyText, textTransform: 'capitalize' }]}>Add cover photo</Text>
                             </Pressable>
@@ -135,6 +138,29 @@ const CreationScreen = ({ navigation }) => {
                     </Button>
                 </View>
             </View>
+
+            {/* Dialog */}
+            <Dialog.Container
+                onBackdropPress={() => { setDialogDisplay(false) }}
+                visible={dialogDisplay}>
+                <Dialog.Title style={[TextLarge, { color: Colors.bodyText }]}>Choose A Option</Dialog.Title>
+                <Pressable
+                    onPress={() => { handleUriImage("Camera") }}
+                    style={{ flexDirection: "row", alignItems: "center", gap: 18, paddingStart: 30 }}>
+                    <FastImage source={require("../../assets/images/camera.png")} style={{ width: 50, height: 50 }} />
+                    <Text style={[TextSmall, { color: Colors.bodyText }]}>Camera</Text>
+                </Pressable>
+                <Pressable
+                    onPress={() => { handleUriImage("Gallery") }}
+                    style={{ flexDirection: "row", alignItems: "center", gap: 18, paddingStart: 30 }}>
+                    <FastImage source={require("../../assets/images/gallery.png")} style={{ width: 50, height: 50 }} />
+                    <Text style={[TextSmall, { color: Colors.bodyText }]}>Gallery</Text>
+                </Pressable>
+                <Dialog.Button
+                    label="Cancel"
+                    style={[TextMedium, { color: Colors.primaryColor, textTransform: 'capitalize' }]}
+                    onPress={() => { setDialogDisplay(false) }} />
+            </Dialog.Container>
         </SafeAreaView>
     )
 }
@@ -175,7 +201,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 8,
         right: 12,
-        backgroundColor: "white",
+        backgroundColor: Colors.inputDisable,
         borderRadius: 100,
         width: 24,
         height: 24,
