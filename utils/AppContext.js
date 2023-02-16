@@ -7,12 +7,15 @@ export const AppContext = createContext();
 export const AppContextProvider = (props) => {
     const { children } = props;
     const [isLogin, setIsLogin] = useState(null);
+
     const handleIsLogin = async () => {
         const token = await AsyncStorage.getItem("token");
         let tempIsLogin = token ? true : false;
         setIsLogin(tempIsLogin);
-        // console.log(token);
+        console.log(token);
     }
+
+    console.log(isLogin);
 
     useEffect(() => {
         handleIsLogin();

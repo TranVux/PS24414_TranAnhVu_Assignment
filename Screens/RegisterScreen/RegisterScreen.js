@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, ToastAndroid } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, ToastAndroid, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import InputField from '../../Components/InputField'
 import { Colors } from '../../assets/constants/Colors'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
 import Button from '../../Components/Button'
 import { IconFacebook, IconGoogle } from '../../assets/images'
-import { DisplayLargeBold, LinkMediumBold, LinkSmallBold, TextLarge, TextSmall } from '../../assets/constants/Typography'
+import { DisplayLargeBold, LinkMediumBold, LinkSmallBold, TextLarge, TextSmall, TextXSmall } from '../../assets/constants/Typography'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AxiosIntance from '../../utils/AxiosIntance'
 
@@ -13,9 +13,11 @@ const RegisterScreen = ({ navigation }) => {
 
     const [usename, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleRegister = async (usename, password) => {
         try {
+            setIsLoading(true);
             const responseRegister = await AxiosIntance().post(
                 "/users/register", { email: usename, password: password }
             );
@@ -24,13 +26,15 @@ const RegisterScreen = ({ navigation }) => {
 
             if (!responseRegister.data.error) {
                 navigation.navigate("LoginScreen");
-                ToastAndroid.show("Đăng ký thành công", ToastAndroid.SHORT);
+                ToastAndroid.show("Sign up success!", ToastAndroid.SHORT);
             } else {
-                ToastAndroid.show("Đăng ký thất bại. Có thể tài khoản của bạn đã tồn tại", ToastAndroid.SHORT);
+                ToastAndroid.show("Sign failure. Account's existed!", ToastAndroid.SHORT);
             }
+            setIsLoading(false);
         } catch (err) {
-            ToastAndroid.show("Đăng ký thất bại", ToastAndroid.SHORT);
+            ToastAndroid.show("Sign failure!", ToastAndroid.SHORT);
             console.log(err);
+            setIsLoading(false);
         }
     }
 
@@ -45,7 +49,9 @@ const RegisterScreen = ({ navigation }) => {
     }
 
     return (
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false} style={{ flex: 1, backgroundColor: "#fff" }}>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}
+            style={{ flex: 1, backgroundColor: "#fff" }}
+            contentContainerStyle={{ flex: isLoading ? 1 : 0 }}>
             <View style={styles.registerScreenContainer}>
                 <View style={styles.header}>
                     <View style={styles.titleContainer}>
@@ -109,6 +115,14 @@ const RegisterScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            {isLoading &&
+                <View style={styles.styleDialog}>
+                    <View style={styles.dialogBox}>
+                        <ActivityIndicator size={'large'} color={Colors.primaryColor} />
+                        <Text style={[TextXSmall, { color: "#000" }]}>Please wait...</Text>
+                    </View>
+                </View>
+            }
         </KeyboardAwareScrollView>
     )
 }
@@ -165,5 +179,25 @@ const styles = StyleSheet.create({
     },
     textButton: {
         color: "#fff"
+    },
+    styleDialog: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#00000078",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: 10
+    },
+    dialogBox: {
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        gap: 5,
+        elevation: 5
     }
 })

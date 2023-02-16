@@ -59,9 +59,9 @@ const CreationScreen = ({ navigation }) => {
         if (res.didCancel) {
             console.log(res);
         } else if (res.errorCode === "camera_unavailable") {
-            ToastAndroid.show("Camera không khả dụng!")
+            ToastAndroid.show("Camera not available!")
         } else if (res.errorCode === "permission") {
-            ToastAndroid.show("Không được cấp quyền truy cập camera!")
+            ToastAndroid.show("Haven't permission access camera")
         } else if (res.errorCode === "others") {
             console.log(res.errorMessage);
         } else {

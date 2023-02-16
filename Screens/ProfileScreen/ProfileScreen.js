@@ -1,5 +1,5 @@
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LinkMediumBold, TextMedium } from '../../assets/constants/Typography'
 import { IconPlus, IconSetting } from '../../assets/images'
 import FastImage from 'react-native-fast-image'
@@ -11,9 +11,28 @@ import NewsCard from '../../Components/Card/NewsCard'
 import { Skeleton } from '@rneui/themed'
 import MyNewsScreen from './MyNewsScreen'
 import RecentNewsScreen from './RecentNewScreen'
+import AxiosIntance from '../../utils/AxiosIntance'
 
 const Tab = createMaterialTopTabNavigator();
 const ProfileScreen = ({ navigation }) => {
+
+    const [listMyNews, setListMyNews] = useState([]);
+
+    const handleGetMyNews = async () => {
+        try {
+            const res = await AxiosIntance().get("articles/my-articles");
+            if (!res.error) {
+                setListMyNews(res.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        handleGetMyNews();
+    }, [])
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
             {/* <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flex: 1 }}> */}
@@ -38,7 +57,7 @@ const ProfileScreen = ({ navigation }) => {
                         <Text style={[TextMedium, { color: Colors.bodyText }]}>Following</Text>
                     </View>
                     <View style={styles.analystContainer}>
-                        <Text style={[LinkMediumBold, { color: "#000" }]}>32</Text>
+                        <Text style={[LinkMediumBold, { color: "#000" }]}>{listMyNews.length}</Text>
                         <Text style={[TextMedium, { color: Colors.bodyText }]}>News</Text>
                     </View>
                 </View>
