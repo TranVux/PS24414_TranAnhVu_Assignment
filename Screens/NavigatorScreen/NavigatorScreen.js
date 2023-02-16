@@ -13,13 +13,14 @@ const Tab = createBottomTabNavigator();
 const NavigatorScreen = () => {
 
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }} sceneContainerStyle={styles.container}>
+        <Tab.Navigator screenOptions={{ headerShown: false, }} sceneContainerStyle={styles.container}>
             <Tab.Screen options={{
                 tabBarIcon: ({ focused }) => {
                     return (
                         focused ? <IconHomeActive /> : <IconHome />
                     )
-                }
+                },
+                lazy: true,
             }} name="Home" component={HomeScreen} />
 
             {/* Explore Screen */}
@@ -28,7 +29,8 @@ const NavigatorScreen = () => {
                     return (
                         focused ? <IconExploreActive /> : <IconExplore />
                     )
-                }
+                },
+                lazy: true,
             }} name="Explore" component={ExploreScreen} />
 
             {/* Bookmark Screen */}
@@ -37,7 +39,8 @@ const NavigatorScreen = () => {
                     return (
                         focused ? <IconBookmarkActive /> : <IconBookmark />
                     )
-                }
+                },
+                lazy: true,
             }} name="Bookmark" component={BookmarkScreen} />
 
             {/* Profile Screen */}
@@ -46,7 +49,8 @@ const NavigatorScreen = () => {
                     return (
                         focused ? <IconProfileActive /> : <IconProfile />
                     )
-                }
+                },
+                lazy: true,
             }} name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )

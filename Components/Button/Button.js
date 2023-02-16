@@ -2,10 +2,11 @@ import { Pressable, StyleSheet } from 'react-native'
 import React from 'react'
 import { Colors } from '../../assets/constants/Colors';
 
-const Button = ({ children, width, height, style, primary, secondary, outline, onPress = () => { } }) => {
+const Button = ({ disabled = false, children, width, height, style, primary, secondary, outline, onPress = () => { } }) => {
     // console.log(width);
     return (
         <Pressable
+            disabled={disabled ? true : false}
             style={[
                 styles.button,
                 {

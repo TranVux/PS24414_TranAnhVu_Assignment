@@ -750,6 +750,166 @@ function IconCheck(props) {
     )
 }
 
+function IconLogout(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_82_10038)">
+                <Path
+                    d="M5 22a1 1 0 01-1-1V3a1 1 0 011-1h14a1 1 0 011 1v3h-2V4H6v16h12v-2h2v3a1 1 0 01-1 1H5zm13-6v-3h-7v-2h7V8l5 4-5 4z"
+                    fill="#050505"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_82_10038">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+// function IconNotify(props) {
+//     return (
+//         <Svg
+//             width={24}
+//             height={24}
+//             viewBox="0 0 24 24"
+//             fill="none"
+//             xmlns="http://www.w3.org/2000/svg"
+//             {...props}
+//         >
+//             <Path
+//                 d="M5.778 16.395h12.444v-5.834c0-3.251-2.786-5.887-6.222-5.887-3.436 0-6.222 2.636-6.222 5.887v5.834zM12 3c4.418 0 8 3.385 8 7.56v7.51H4v-7.51C4 6.386 7.582 3 12 3zM9.778 18.907h4.444c0 .555-.234 1.087-.65 1.48A2.294 2.294 0 0112 21c-.59 0-1.155-.22-1.571-.613a2.033 2.033 0 01-.651-1.48z"
+//                 fill="#050505"
+//             />
+//         </Svg>
+//     )
+// }
+
+function IconSecurity(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_82_10029)">
+                <Path
+                    d="M6 8V7a6 6 0 1112 0v1h2a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V9a1 1 0 011-1h2zm13 2H5v10h14V10zm-8 5.732a2 2 0 112 0V18h-2v-2.268zM8 8h8V7a4 4 0 10-8 0v1z"
+                    fill="#050505"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_82_10029">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconChangeMode(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_88_6921)">
+                <Path
+                    d="M10 7a7 7 0 0012 4.9v.1c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2h.1A6.977 6.977 0 0010 7zm-6 5a8 8 0 0015.062 3.762A9 9 0 018.238 4.938 7.999 7.999 0 004 12z"
+                    fill="#050505"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_88_6921">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconHelp(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_82_10035)">
+                <Path
+                    d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 100-16.001A8 8 0 0012 20zm-1-5h2v2h-2v-2zm2-1.645V14h-2v-1.5a1 1 0 011-1 1.5 1.5 0 10-1.471-1.794l-1.962-.393A3.5 3.5 0 1113 13.355z"
+                    fill="#050505"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_82_10035">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconArrow(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <G clipPath="url(#clip0_82_10076)">
+                <Path
+                    d="M12.172 12L9.343 9.172l1.414-1.415L15 12l-4.243 4.243-1.414-1.415L12.172 12z"
+                    fill="#4E4B66"
+                />
+            </G>
+            <Defs>
+                <ClipPath id="clip0_82_10076">
+                    <Path fill="#fff" d="M0 0H24V24H0z" />
+                </ClipPath>
+            </Defs>
+        </Svg>
+    )
+}
+
+function IconNotifySmall(props) {
+    return (
+        <Svg
+            width={24}
+            height={24}
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            {...props}
+        >
+            <Path
+                d="M5.778 16.395h12.444v-5.834c0-3.251-2.786-5.887-6.222-5.887-3.436 0-6.222 2.636-6.222 5.887v5.834zM12 3c4.418 0 8 3.385 8 7.56v7.51H4v-7.51C4 6.386 7.582 3 12 3zM9.778 18.907h4.444c0 .555-.234 1.087-.65 1.48A2.294 2.294 0 0112 21c-.59 0-1.155-.22-1.571-.613a2.033 2.033 0 01-.651-1.48z"
+                fill="#050505"
+            />
+        </Svg>
+    )
+}
 const FallBackImage = require("./fallback.png")
 
-export { IconCheck, IconEdit, IconAddPic, IconTextAlign, IconTypography, IconSetting, IconHeartFill, IconPlus, IconShare, IconProfile, IconProfileActive, IconBookmarkActive, IconExplore, IconExploreActive, IconHomeActive, IconHome, IconBookmark, IconHeartOutline, IconCommentOutline, IconMoreOption, IconTime, AppLogo, IconNotify, IconHidePassword, IconClose, IconWarning, IconGoogle, IconFacebook, IconBack, IconChangeAvatar, FallBackImage, IconSearch, IconOption }
+export { IconNotifySmall, IconLogout, IconHelp, IconArrow, IconChangeMode, IconSecurity, IconCheck, IconEdit, IconAddPic, IconTextAlign, IconTypography, IconSetting, IconHeartFill, IconPlus, IconShare, IconProfile, IconProfileActive, IconBookmarkActive, IconExplore, IconExploreActive, IconHomeActive, IconHome, IconBookmark, IconHeartOutline, IconCommentOutline, IconMoreOption, IconTime, AppLogo, IconNotify, IconHidePassword, IconClose, IconWarning, IconGoogle, IconFacebook, IconBack, IconChangeAvatar, FallBackImage, IconSearch, IconOption }

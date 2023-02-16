@@ -8,6 +8,7 @@ import Spacing from '../../Components/Spacing'
 import AxiosIntance from '../../utils/AxiosIntance'
 import { Skeleton } from '@rneui/themed'
 import ItemLoading from '../../Components/ItemLoading'
+import { Colors } from '../../assets/constants/Colors'
 
 const HomeScreen = ({ navigation }) => {
 
@@ -65,20 +66,15 @@ const HomeScreen = ({ navigation }) => {
                 </Pressable>
             </View>
             <ScrollView keyboardShouldPersistTaps="always" style={styles.scrollView} scrollEnabled={true} showsVerticalScrollIndicator={false}>
-                {/* Search input */}
-                <InputField
-                    iconLeft={true}
-                    iconRight={true}
-                    onlyDisplayIconRightOnFocus={false}
-                    inputStyle={styles.inputStyle}
-                    inputContainerStyle={{ marginTop: 0 }}
-                    placeholder="Search"
-                    onPressIconRight={() => { console.log("Press icon right"); }}
-                    onPressIconLeft={() => { console.log("Press icon left"); }}
-                >
-                    <IconSearch iconLeft />
-                    <IconOption iconRight />
-                </InputField>
+                <View style={styles.searchBar}>
+                    <Pressable style={styles.leftContainer} onPress={() => { navigation.navigate("SearchScreen") }}>
+                        <IconSearch />
+                        <Text style={[TextSmall, { color: Colors.placeHolder }]}>Search</Text>
+                    </Pressable>
+                    <Pressable onPress={() => { console.log("option button presss"); }}>
+                        <IconOption />
+                    </Pressable>
+                </View>
                 {/* header content */}
                 <View style={[styles.headerContent]}>
                     <Text style={[LinkMediumBold, { color: "#000" }]}>Trending</Text>
@@ -154,5 +150,21 @@ const styles = StyleSheet.create({
     },
     inputContainerStyle: {
         height: 0
+    },
+    searchBar: {
+        backgroundColor: "white",
+        borderWidth: 1,
+        borderColor: Colors.bodyText,
+        height: 48,
+        borderRadius: 6,
+        marginTop: 10,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 12
+    },
+    leftContainer: {
+        flexDirection: "row",
+        gap: 10
     }
 })

@@ -7,97 +7,12 @@ import { Colors } from '../../assets/constants/Colors'
 import Button from '../../Components/Button'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import Spacing from '../../Components/Spacing'
-import { DATA } from '../../assets/ExampleData'
 import NewsCard from '../../Components/Card/NewsCard'
 import { Skeleton } from '@rneui/themed'
-
+import MyNewsScreen from './MyNewsScreen'
+import RecentNewsScreen from './RecentNewScreen'
 
 const Tab = createMaterialTopTabNavigator();
-
-const handleRenderItem = ({ item, index }) => {
-    if (index > 0) {
-        return (
-            <NewsCard
-                key={item._id} data={item} horizontal
-                onPress={() => { handleOnClickNews(item) }}
-                onPressMoreButton={() => { console.log("Press into more button"); }}
-                onPressNewsAuthor={() => { console.log("Press into news author"); }} />
-        )
-    }
-}
-
-const getKey = (item) => {
-    return item._id;
-}
-
-const MyNewsScreen = ({ navigation }) => {
-
-    const handleRenderItem = ({ item, index }) => {
-        if (index > 0) {
-            return (
-                <NewsCard
-                    key={item._id} data={item} horizontal
-                    onPress={() => { handleOnClickNews(item) }}
-                    onPressMoreButton={() => { console.log("Press into more button"); }}
-                    onPressNewsAuthor={() => { console.log("Press into news author"); }} />
-            )
-        }
-    }
-
-    const handleOnClickNews = (data) => {
-        navigation.navigate('DetailScreen', { ...data });
-    }
-
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                ItemSeparatorComponent={<Spacing />}
-                data={DATA}
-                keyExtractor={getKey}
-                renderItem={handleRenderItem}
-                removeClippedSubviews={true}
-                updateCellsBatchingPeriod={70}
-            />
-        </SafeAreaView>
-    )
-}
-
-
-const RecentNewsScreen = ({ navigation }) => {
-
-    const handleRenderItem = ({ item, index }) => {
-        if (index > 0) {
-            return (
-                <NewsCard
-                    key={item._id} data={item} horizontal
-                    onPress={() => { handleOnClickNews(item) }}
-                    onPressMoreButton={() => { console.log("Press into more button"); }}
-                    onPressNewsAuthor={() => { console.log("Press into news author"); }} />
-            )
-        }
-    }
-
-    const handleOnClickNews = (data) => {
-        navigation.navigate('DetailScreen', { ...data });
-    }
-
-    return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <FlatList
-                showsVerticalScrollIndicator={false}
-                ItemSeparatorComponent={<Spacing />}
-                data={DATA}
-                keyExtractor={getKey}
-                renderItem={handleRenderItem}
-                removeClippedSubviews={true}
-                updateCellsBatchingPeriod={70}
-            />
-        </SafeAreaView>
-    )
-}
-
 const ProfileScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -105,7 +20,7 @@ const ProfileScreen = ({ navigation }) => {
             <View style={styles.header}>
                 <View style={{ width: 24, height: 24 }} />
                 <Text style={[TextMedium, { color: "#000", }]}>Profile</Text>
-                <Pressable onPress={() => { console.log("Press Setting Button"); }}>
+                <Pressable onPress={() => { navigation.navigate("SettingScreen") }}>
                     <IconSetting />
                 </Pressable>
             </View>

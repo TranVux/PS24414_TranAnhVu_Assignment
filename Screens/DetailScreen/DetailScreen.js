@@ -1,5 +1,5 @@
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { IconBack, IconBookmark, IconBookmarkActive, IconCommentOutline, IconHeartFill, IconHeartOutline, IconMoreOption, IconShare } from '../../assets/images';
 import TopicAuthorCard from '../../Components/TopicAuthorCard';
@@ -12,6 +12,8 @@ import Spacing from '../../Components/Spacing';
 import FastImage from 'react-native-fast-image'
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { Fallback } from '../../assets/constants/Fallback';
+import AxiosIntance from '../../utils/AxiosIntance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DetailScreen = ({ navigation, route }) => {
 
@@ -40,6 +42,18 @@ const DetailScreen = ({ navigation, route }) => {
     const getKey = (item) => {
         return item._id;
     }
+
+    const getDetail = async (_id) => {
+        const token = await AsyncStorage.getItem("token");
+        const res = await AxiosIntance().get("articles/" + token + _id);
+        console.log(res);
+    }
+
+    // useEffect(() => {
+    //     getDetail(params?._id);
+    //     return () => { }
+    // }, [])
+
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

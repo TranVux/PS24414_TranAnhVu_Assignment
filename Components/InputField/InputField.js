@@ -1,5 +1,5 @@
-import { Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
-import React, { useRef, useState, Children } from 'react'
+import { ActivityIndicator, Keyboard, Pressable, StyleSheet, Text, TextInput, View } from 'react-native'
+import React, { useRef, useState, Children, useEffect } from 'react'
 import { Colors } from '../../assets/constants/Colors';
 import { IconClose, IconHidePassword, IconWarning } from '../../assets/images';
 import { TextSmall } from '../../assets/constants/Typography';
@@ -11,7 +11,7 @@ const INPUTSTATE = {
 
 const InputField = (
     { children, iconLeft = false, iconRight = false, titleField, placeholder = "", secureTextEntry = false,
-        ref, inputContainerStyle, inputStyle, importance, onChangeText = (text) => { },
+        ref, inputContainerStyle, inputStyle, importance, progressBar, onChangeText = (text) => { },
         onPressIconRight = () => { }, onPressIconLeft = () => { }
     }
 ) => {
@@ -20,6 +20,7 @@ const InputField = (
     const [showText, setshowText] = useState(secureTextEntry)
     const [inputFocus, setInputFocus] = useState(false)
     const [text, setText] = useState("")
+    const [isLoading, setIsLoading] = useState(progressBar);
 
     const handleDeleteText = () => {
         setText("")
@@ -41,6 +42,10 @@ const InputField = (
         let tempInputFocus = inputFocus;
         setInputFocus(!tempInputFocus);
     }
+
+    useEffect(() => {
+        setIsLoading(progressBar)
+    }, [progressBar])
     return (
         <View style={{ ...inputContainerStyle }}>
             <View style={styles.titleContainer}>
@@ -100,12 +105,17 @@ const InputField = (
 
                 {/* icon clear text */}
                 {
-                    (text.length > 0) && !secureTextEntry && inputFocus &&
+                    (text.length > 0) && !secureTextEntry && inputFocus && !isLoading &&
                     <Pressable onPress={handleDeleteText} style={styles.iconEnd}>
                         <IconClose
                             width={19} height={19}
                             fill={inputState === INPUTSTATE.ERROR ? Colors.errorDark : Colors.bodyText} />
                     </Pressable>
+                }
+                {/* activity indicator */}
+                {
+                    isLoading &&
+                    <ActivityIndicator color={"#ccc"} size={15} style={styles.iconEnd} />
                 }
             </View>
             {/* warning */}
@@ -160,5 +170,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         end: 12,
         zIndex: 1
+    },
+    progressBar: {
+
     }
 })
