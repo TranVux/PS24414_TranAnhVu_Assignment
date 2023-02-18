@@ -24,7 +24,7 @@ const RegisterScreen = ({ navigation }) => {
             console.log(responseRegister);
             console.log(responseRegister.data.error);
 
-            if (!responseRegister.data.error) {
+            if (!responseRegister.error) {
                 navigation.navigate("LoginScreen");
                 ToastAndroid.show("Sign up success!", ToastAndroid.SHORT);
             } else {

@@ -7,6 +7,7 @@ export const AppContext = createContext();
 export const AppContextProvider = (props) => {
     const { children } = props;
     const [isLogin, setIsLogin] = useState(null);
+    const [infoUser, setInfoUser] = useState({});
 
     const handleIsLogin = async () => {
         const token = await AsyncStorage.getItem("token");
@@ -28,7 +29,7 @@ export const AppContextProvider = (props) => {
     }
 
     return (
-        <AppContext.Provider value={{ isLogin, setIsLogin }}>
+        <AppContext.Provider value={{ isLogin, setIsLogin, infoUser, setInfoUser }}>
             {children}
         </AppContext.Provider>
     )

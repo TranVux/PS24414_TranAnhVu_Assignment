@@ -10,7 +10,7 @@ const INPUTSTATE = {
 }
 
 const InputField = (
-    { children, iconLeft = false, iconRight = false, titleField, placeholder = "", secureTextEntry = false,
+    { value, children, iconLeft = false, iconRight = false, titleField, placeholder = "", secureTextEntry = false,
         ref, inputContainerStyle, inputStyle, importance, progressBar, onChangeText = (text) => { },
         onPressIconRight = () => { }, onPressIconLeft = () => { }
     }
@@ -93,7 +93,7 @@ const InputField = (
                         },
                         { ...inputStyle }
                     ]}
-                    value={text}
+                    value={value}
                     onChangeText={newText => handleChangeText(newText)}
                     secureTextEntry={showText} />
 

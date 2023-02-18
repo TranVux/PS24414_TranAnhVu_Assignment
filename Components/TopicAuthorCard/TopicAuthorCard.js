@@ -10,7 +10,7 @@ import { } from '../../assets/constants/Typography'
 import FastImage from 'react-native-fast-image'
 import { Fallback } from '../../assets/constants/Fallback'
 
-const TopicAuthorCard = ({ authorCard = true, topicCard, isFollow = false, isSave, onPress = () => { }, onPressButton = () => { }, style, data }) => {
+const TopicAuthorCard = ({ authorCard, topicCard, isFollow = false, isSave, onPress = () => { }, onPressButton = () => { }, style, data }) => {
 
     const [amountOfDate, setAmountOfDate] = useState({});
 
@@ -34,7 +34,7 @@ const TopicAuthorCard = ({ authorCard = true, topicCard, isFollow = false, isSav
     }, [])
 
     return (
-        <SafeAreaView style={[styles.cardContainer, { ...style }]}>
+        <SafeAreaView style={[styles.cardContainer, { ...style }, { height: topicCard ? 70 : 50, }]}>
             {/* Topics */}
             {/* {topicCard && authorCard*/}
             <View style={styles.leftCardContainer}>
@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
     cardContainer: {
         flex: 1,
         flexDirection: "row",
-        height: 50
+        alignItems: "center",
+        justifyContent: "center"
     },
     titleCard: {
         // marginBottom: 4,
@@ -86,6 +87,10 @@ const styles = StyleSheet.create({
     },
     contentCard: {
         color: Colors.bodyText
+    },
+    lefContent: {
+        alignItems: "center",
+        justifyContent: "center"
     },
     leftCardContainer: {
         flex: 1,

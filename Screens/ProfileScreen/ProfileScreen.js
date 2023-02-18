@@ -1,5 +1,5 @@
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { LinkMediumBold, TextMedium } from '../../assets/constants/Typography'
 import { IconPlus, IconSetting } from '../../assets/images'
 import FastImage from 'react-native-fast-image'
@@ -12,11 +12,14 @@ import { Skeleton } from '@rneui/themed'
 import MyNewsScreen from './MyNewsScreen'
 import RecentNewsScreen from './RecentNewScreen'
 import AxiosIntance from '../../utils/AxiosIntance'
+import { AppContext } from '../../utils/AppContext'
+import { Fallback } from '../../assets/constants/Fallback'
 
 const Tab = createMaterialTopTabNavigator();
 const ProfileScreen = ({ navigation }) => {
 
     const [listMyNews, setListMyNews] = useState([]);
+    const { infoUser } = useContext(AppContext);
 
     const handleGetMyNews = async () => {
         try {
@@ -46,7 +49,7 @@ const ProfileScreen = ({ navigation }) => {
             <View style={styles.infoContainer}>
                 <View style={styles.firstPart}>
                     <FastImage
-                        source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU" }}
+                        source={{ uri: infoUser.image ? infoUser.image : Fallback.authorImage }}
                         style={styles.avatarStyle} />
                     <View style={styles.analystContainer}>
                         <Text style={[LinkMediumBold, { color: "#000" }]}>2156</Text>
@@ -62,7 +65,7 @@ const ProfileScreen = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.secondPart}>
-                    <Text style={[LinkMediumBold, { color: "#000" }]}>TAVUX</Text>
+                    <Text style={[LinkMediumBold, { color: "#000" }]}>{infoUser.name ? infoUser.name : "Author"}</Text>
                     <Text style={[TextMedium, { color: Colors.bodyText }]}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Text>
                 </View>
             </View>

@@ -9,7 +9,7 @@ import { Fallback } from '../../assets/constants/Fallback';
 
 const NewsCard = (
     {
-        style, horizontal, vertical, data,
+        style, horizontal, data,
         onPress = () => { }, onPressNewsAuthor = () => { },
         onPressMoreButton = () => { },
     }) => {
@@ -37,28 +37,23 @@ const NewsCard = (
     useEffect(() => {
         setAmountOfDate(caculateAmountDate(createdAt));
     }, [])
-
+    // console.log("horizontal: " + horizontal + " vertical: " + vertical);
     return (
         <SafeAreaView style={[
             styles.cardContainer,
-            { flexDirection: horizontal ? "row" : "column" },
+            { flexDirection: horizontal ? "row" : "column", alignItems: !horizontal ? "flex-start" : "center" },
             { ...style }
         ]}>
-            <Pressable onPress={onPress} style={{ width: horizontal ? 96 : "100%" }}>
-                {/* <ImageLoader source={image} borderRadius={6} style={{
-                    width: "100%",
-                    height: horizontal ? 96 : 183,
-                    ...styles.imageNewsStyle
-                }} /> */}
+            <Pressable onPress={onPress} style={{ width: horizontal ? 96 : "100%", }}>
                 <FastImage
                     style={{ borderRadius: 6, width: "100%", height: horizontal ? 96 : 183 }}
                     source={{ uri: image ? image : Fallback.newImage }}
                     fallback={true}
                     resizeMode={FastImage.resizeMode.cover} />
             </Pressable>
-            <View style={[styles.contentContainer, { marginStart: horizontal ? 4 : 0 }]}>
+            <View style={[styles.contentContainer, { marginStart: 4 }]}>
                 <Text style={[TextXSmall, styles.categoryNews, { marginTop: horizontal ? 0 : 8 }]}>Europe</Text>
-                <Pressable onPress={onPress}>
+                <Pressable onPress={onPress} style={{ width: "100%" }}>
                     <Text numberOfLines={2} ellipsizeMode={'tail'} style={[TextMedium, styles.newsTitle]}>{title}</Text>
                 </Pressable>
                 <View style={styles.ortherInfoContainer}>
@@ -95,7 +90,7 @@ const styles = StyleSheet.create({
     imageNewsStyle: {
     },
     contentContainer: {
-        flex: 1
+        flex: 1,
     },
     categoryNews: {
         color: Colors.bodyText,
@@ -107,10 +102,14 @@ const styles = StyleSheet.create({
     ortherInfoContainer: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        width: "100%"
     },
-    leftContainer: { flexDirection: 'row' },
-    rightContainer: {},
+    leftContainer: {
+        flexDirection: 'row',
+    },
+    rightContainer: {
+    },
     authorContainer: {
         flexDirection: "row",
         alignItems: "center",

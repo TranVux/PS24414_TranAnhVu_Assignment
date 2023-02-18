@@ -22,20 +22,19 @@ export const DATA = [
             "name": "TAVUX",
             "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"
         }
-    }
-    // ,
-    // {
-    //     "_id": "3",
-    //     "title": "Đối phó với bài tập Tết",
-    //     "content": "Ngày nghỉ Tết cuối cùng, hàng chục trang bài tập Toán, Tiếng Việt và Tiếng Anh của Anh Thư được giải quyết, nhưng do mẹ và dì làm giúp.",
-    //     "image": "https://i1-vnexpress.vnecdn.net/2023/01/30/4313-1662984910-1675082690-4516-1675083076.jpg?w=300&h=180&q=100&dpr=1&fit=crop&s=BnjiAv8Bq8iaZcGQ2jJC3Q",
-    //     "createdAt": "2013-01-12T06:26:17.539Z",
-    //     "createdBy": {
-    //         "_id": "63ac39aeedf7c80016c57a67",
-    //         "name": "TAVUX",
-    //         "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"
-    //     }
-    // },
+    },
+    {
+        "_id": "3",
+        "title": "Đối phó với bài tập Tết",
+        "content": "Ngày nghỉ Tết cuối cùng, hàng chục trang bài tập Toán, Tiếng Việt và Tiếng Anh của Anh Thư được giải quyết, nhưng do mẹ và dì làm giúp.",
+        "image": "https://i1-vnexpress.vnecdn.net/2023/01/30/4313-1662984910-1675082690-4516-1675083076.jpg?w=300&h=180&q=100&dpr=1&fit=crop&s=BnjiAv8Bq8iaZcGQ2jJC3Q",
+        "createdAt": "2013-01-12T06:26:17.539Z",
+        "createdBy": {
+            "_id": "63ac39aeedf7c80016c57a67",
+            "name": "TAVUX",
+            "avatar": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0nV59R9ja-A8uRs347CfNrOYvWJsxh_VcQ&usqp=CAU"
+        }
+    },
     // {
     //     "_id": "4",
     //     "title": "Đường trở thành giáo viên ở Mỹ của một phụ nữ Việt",

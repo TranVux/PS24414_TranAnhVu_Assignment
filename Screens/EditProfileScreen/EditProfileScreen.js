@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, ToastAndroid, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { IconBack, IconChangeAvatar, IconCheck } from '../../assets/images'
@@ -10,16 +10,21 @@ import Dialog from "react-native-dialog";
 import { Colors } from '../../assets/constants/Colors'
 import FastImage from 'react-native-fast-image'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import AxiosIntance from '../../utils/AxiosIntance'
+import { AppContext } from '../../utils/AppContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const EditProfileScreen = ({ navigation }) => {
 
     const [dialogDisplay, setDialogDisplay] = useState(false);
-    const [uriImage, setUriImage] = useState({});
+    const [uriImage, setUriImage] = useState("");
+    const [urlImage, setUrlImage] = useState("");
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
+    const { infoUser, setInfoUser } = useContext(AppContext);
 
     const handleEmail = (email) => {
         console.log(email);
@@ -70,12 +75,62 @@ const EditProfileScreen = ({ navigation }) => {
         } else if (res.errorCode === "others") {
             console.log(res.errorMessage);
         } else {
-            setUriImage({ uri: res.assets[0].uri })
+            setUriImage(res.assets[0].uri)
             console.log(res.assets[0].uri);
         }
         setDialogDisplay(false)
     }
 
+    const handleFillProfile = () => {
+        console.log(infoUser);
+        setEmail(infoUser?.email);
+        setUsername(infoUser?.name);
+        setPhoneNumber(infoUser?.phone);
+        setUriImage(infoUser?.avatar);
+        setAddress(infoUser?.address)
+    }
+
+    const handleUpdateProfile = async () => {
+        try {
+            let formData = new FormData();
+            formData.append("image", {
+                uri: uriImage,
+                type: "image/jpeg",
+                name: "image.jpg"
+            })
+            //post image
+            const resImage = await AxiosIntance("multipart/form-data").post("media/upload", formData);
+            // console.log(res);
+            if (!resImage.error) {
+                let data = {
+                    name: username,
+                    address: address,
+                    phone: phoneNumber,
+                    avatar: resImage.data.path,
+                    dob: infoUser.dob,
+                    email: email
+                }
+                const res = await AxiosIntance().post("users/update-profile", data)
+                console.log(res);
+                if (!res.error) {
+                    ToastAndroid.show("Change info success!", ToastAndroid.SHORT);
+                    setInfoUser(data);
+                    await AsyncStorage.setItem("infoUser", JSON.stringify({ ...infoUser, ...data }));
+                    navigation.goBack();
+                } else {
+                    ToastAndroid.show("Change info failure!", ToastAndroid.SHORT);
+                }
+            }
+        } catch (err) {
+            ToastAndroid.show("Change info failure!", ToastAndroid.SHORT);
+            console.log(err);
+        }
+    }
+
+    // Fill profile at first time 
+    useEffect(() => {
+        handleFillProfile()
+    }, [])
     return (
         <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}
@@ -88,13 +143,13 @@ const EditProfileScreen = ({ navigation }) => {
                         <IconBack />
                     </Pressable>
                     <Text style={[TextMedium, { color: "#000" }]}>Edit Profile</Text>
-                    <Pressable onPress={() => { console.log("Update profile"); }}>
+                    <Pressable onPress={handleUpdateProfile}>
                         <IconCheck />
                     </Pressable>
                 </View>
                 <View style={styles.avatarField}>
                     <FastImage
-                        source={JSON.stringify(uriImage) !== "{}" ? uriImage : { uri: Fallback.newImage }}
+                        source={{ uri: uriImage !== "" ? uriImage : Fallback.newImage }}
                         style={styles.imageStyle} />
                     <Pressable style={styles.iconContainer}
                         onPress={() => { setDialogDisplay(true) }}>
@@ -103,18 +158,22 @@ const EditProfileScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.inputContainer}>
                     <InputField
+                        value={username}
                         onChangeText={(newText) => { handleUsername(newText) }}
                         importance
                         inputStyle={styles.inputStyle} titleField={"Username"} />
                     <InputField
+                        value={email}
                         onChangeText={(newText) => { handleEmail(newText) }}
                         importance
                         inputStyle={styles.inputStyle} titleField={"Email"} />
                     <InputField
+                        value={address}
                         onChangeText={(newText) => { handleAddress(newText) }}
                         importance
                         inputStyle={styles.inputStyle} titleField={"Address"} />
                     <InputField
+                        value={phoneNumber}
                         onChangeText={(newText) => { handlePhoneNumber(newText) }}
                         importance
                         inputStyle={styles.inputStyle} titleField={"Phone Number"} />

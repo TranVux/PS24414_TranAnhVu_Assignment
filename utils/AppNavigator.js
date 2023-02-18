@@ -32,8 +32,8 @@ const AppNavigator = () => {
                         <Stack.Screen component={SearchScreen} name='SearchScreen' />
                         <Stack.Screen component={CreationScreen} name="CreationScreen" />
                         <Stack.Screen component={DetailScreen} name='DetailScreen' />
-                        <Stack.Screen component={FillProfileScreen} name='FillProfileScreen' />
                         <Stack.Screen component={EditProfileScreen} name="EditProfileScreen" />
+                        <Stack.Screen component={FillProfileScreen} name='FillProfileScreen' />
                     </>
             }
         </Stack.Navigator>

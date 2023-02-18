@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
 
     const [usename, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { isLogin, setIsLogin } = useContext(AppContext);
+    const { setIsLogin, setInfoUser } = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async (usename, password) => {
@@ -26,11 +26,13 @@ const LoginScreen = ({ navigation }) => {
             );
             console.log(responseLogin);
 
-            if (!responseLogin.data.error) {
+            if (!responseLogin.error) {
                 await AsyncStorage.setItem("token", responseLogin.data.token);
+                await AsyncStorage.setItem("infoUser", JSON.stringify(responseLogin.data.user));
                 console.log(responseLogin.data.token);
-                // navigation.navigate("NavigatorScreen");
                 setIsLogin(true);
+                setInfoUser(responseLogin.data.user);
+                console.log(responseLogin.data.user);
                 ToastAndroid.show("Login Success!", ToastAndroid.SHORT);
             } else {
                 ToastAndroid.show("Login failure. Please check email or password again", ToastAndroid.SHORT);
@@ -38,7 +40,7 @@ const LoginScreen = ({ navigation }) => {
             setIsLoading(false);
         } catch (err) {
             setIsLoading(false);
-            ToastAndroid.show("Login failure", ToastAndroid.SHORT);
+            ToastAndroid.show("Login failure. Please check email or password again", ToastAndroid.SHORT);
             console.log(err);
         }
     }
@@ -70,8 +72,8 @@ const LoginScreen = ({ navigation }) => {
                 <View style={styles.formContainer}>
 
                     {/* input field */}
-                    <InputField importance titleField="Username" inputContainerStyle={{ marginBottom: 16 }} onChangeText={(text) => { handleUserNameChange(text) }} />
-                    <InputField importance titleField="Password" secureTextEntry={true} onChangeText={(text) => { handlePasswordChange(text) }} />
+                    <InputField value={usename} importance titleField="Username" inputContainerStyle={{ marginBottom: 16 }} onChangeText={(text) => { handleUserNameChange(text) }} />
+                    <InputField value={password} importance titleField="Password" secureTextEntry={true} onChangeText={(text) => { handlePasswordChange(text) }} />
                     {/*  */}
 
                     <View style={styles.optionFormContainer}>

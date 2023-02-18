@@ -1,5 +1,5 @@
 import { Pressable, SafeAreaView, StyleSheet, View, Text, FlatList, ScrollView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import InputField from '../../Components/InputField'
 import { AppLogo, IconClose, IconNotify, IconOption, IconSearch } from '../../assets/images'
 import { LinkMediumBold, TextSmall } from '../../assets/constants/Typography'
@@ -9,12 +9,16 @@ import AxiosIntance from '../../utils/AxiosIntance'
 import { Skeleton } from '@rneui/themed'
 import ItemLoading from '../../Components/ItemLoading'
 import { Colors } from '../../assets/constants/Colors'
+import { AppContext } from '../../utils/AppContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const HomeScreen = ({ navigation }) => {
 
     const [dataList, setDataList] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [dataListLastest, setDataListLastest] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const { infoUser, setInfoUser } = useContext(AppContext);
 
     const handleSearchValue = (newText) => {
         setSearchValue(newText);
@@ -26,13 +30,16 @@ const HomeScreen = ({ navigation }) => {
 
     const handleFetchData = async () => {
         try {
+            setIsLoading(true);
             const res = await AxiosIntance().get("/articles");
             // console.log(res);
             if (!res.error) {
                 setDataList(res.data);
             }
+            setIsLoading(false);
         } catch (err) {
             console.log(err);
+            setIsLoading(false);
         }
     }
 
@@ -45,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
         if (index > 0) {
             return (
                 <NewsCard
-                    key={item._id} data={item} horizontal
+                    key={item._id} data={item} horizontal={true}
                     onPress={() => { handleOnClickNews(item) }}
                     onPressMoreButton={() => { console.log("Press into more button"); }}
                     onPressNewsAuthor={() => { console.log("Press into news author"); }} />
@@ -57,8 +64,17 @@ const HomeScreen = ({ navigation }) => {
         return item._id;
     }
 
+    const handleInfoUser = async () => {
+        if (JSON.stringify(infoUser) === "{}") {
+            const resInfoUser = await AsyncStorage.getItem("infoUser");
+            setInfoUser(JSON.parse(resInfoUser))
+        }
+        console.log(infoUser);
+    }
+
     return (
-        <SafeAreaView style={styles.screenContainer}>
+        <SafeAreaView style={styles.screenContainer}
+            onLayout={handleInfoUser}>
             <View style={styles.headerContainer}>
                 <AppLogo />
                 <Pressable onPress={() => { console.log("notify icon clicked"); }}>
@@ -84,12 +100,14 @@ const HomeScreen = ({ navigation }) => {
                 <View style={styles.topTrendingNews}>
                     {dataList.length > 0 ?
                         <NewsCard
-                            vertical data={dataList[0]}
+                            horizontal={false} data={dataList[0]}
                             onPress={() => { handleOnClickNews(dataList[0]) }}
                             onPressMoreButton={() => { console.log("Press into more button"); }}
                             onPressNewsAuthor={() => { console.log("Press into news author"); }} />
-                        :
-                        <ItemLoading vertical={true} />
+                        : isLoading ?
+                            <ItemLoading vertical={true} />
+                            :
+                            <></>
                     }
                 </View>
                 <View style={[styles.headerContent, { marginVertical: 0, marginTop: 16 }]}>
@@ -107,11 +125,13 @@ const HomeScreen = ({ navigation }) => {
                             removeClippedSubviews={true}
                             updateCellsBatchingPeriod={70}
                         /> :
-                        <>
-                            <ItemLoading />
-                            <ItemLoading />
-                            <ItemLoading />
-                        </>
+                        isLoading ?
+                            <>
+                                <ItemLoading />
+                                <ItemLoading />
+                                <ItemLoading />
+                            </> :
+                            <></>
                 }
             </ScrollView>
         </SafeAreaView >
@@ -165,6 +185,7 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         flexDirection: "row",
-        gap: 10
+        gap: 10,
+        flex: 1
     }
 })

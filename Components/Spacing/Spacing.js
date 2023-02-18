@@ -1,9 +1,9 @@
 import { View } from 'react-native'
 import React from 'react'
 
-const Spacing = () => {
+const Spacing = ({ spaceSize }) => {
     return (
-        <View style={{ marginVertical: 10 }} />
+        <View style={{ marginVertical: spaceSize ? spaceSize : 10 }} />
     )
 }
 
