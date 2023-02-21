@@ -8,12 +8,16 @@ export const AppContextProvider = (props) => {
     const { children } = props;
     const [isLogin, setIsLogin] = useState(null);
     const [infoUser, setInfoUser] = useState({});
+    const [currentPass, setCurrentPass] = useState("");
 
     const handleIsLogin = async () => {
         const token = await AsyncStorage.getItem("token");
+        const _currentPass = await AsyncStorage.getItem("password");
         let tempIsLogin = token ? true : false;
         setIsLogin(tempIsLogin);
-        console.log(token);
+        setCurrentPass(_currentPass);
+        console.log("Password in context " + currentPass);
+        // console.log(token);
     }
 
     console.log(isLogin);
@@ -29,7 +33,7 @@ export const AppContextProvider = (props) => {
     }
 
     return (
-        <AppContext.Provider value={{ isLogin, setIsLogin, infoUser, setInfoUser }}>
+        <AppContext.Provider value={{ isLogin, setIsLogin, infoUser, setInfoUser, setCurrentPass, currentPass }}>
             {children}
         </AppContext.Provider>
     )

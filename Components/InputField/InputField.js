@@ -12,11 +12,13 @@ const INPUTSTATE = {
 const InputField = (
     { value, children, iconLeft = false, iconRight = false, titleField, placeholder = "", secureTextEntry = false,
         ref, inputContainerStyle, inputStyle, importance, progressBar, onChangeText = (text) => { },
-        onPressIconRight = () => { }, onPressIconLeft = () => { }
+        onPressIconRight = () => { }, onPressIconLeft = () => { },
+        errorMessage,
     }
 ) => {
 
     const [inputState, setInputState] = useState(INPUTSTATE.NORMAL)
+    const [_errorMessage, setErrorMessage] = useState("");
     const [showText, setshowText] = useState(secureTextEntry)
     const [inputFocus, setInputFocus] = useState(false)
     const [text, setText] = useState("")
@@ -46,6 +48,15 @@ const InputField = (
     useEffect(() => {
         setIsLoading(progressBar)
     }, [progressBar])
+
+    useEffect(() => {
+        if (errorMessage) {
+            setInputState(INPUTSTATE.ERROR);
+        } else {
+            setInputState(INPUTSTATE.NORMAL);
+        }
+    }, [errorMessage])
+
     return (
         <View style={{ ...inputContainerStyle }}>
             <View style={styles.titleContainer}>
@@ -122,7 +133,7 @@ const InputField = (
             {inputState === INPUTSTATE.ERROR &&
                 <View View style={styles.warningContainer}>
                     <IconWarning width={16} height={16} />
-                    <Text style={[TextSmall, styles.warningText]}>Invalid {titleField}</Text>
+                    <Text style={[TextSmall, styles.warningText]}>{errorMessage}</Text>
                 </View>}
             {/* end warning */}
         </View >

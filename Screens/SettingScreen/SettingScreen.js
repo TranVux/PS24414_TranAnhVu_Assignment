@@ -1,5 +1,5 @@
 import { ActivityIndicator, Pressable, StyleSheet, Text, ToastAndroid, View } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { IconArrow, IconBack, IconChangeMode, IconHelp, IconLogout, IconNotifySmall, IconSecurity } from '../../assets/images'
 import { TextMedium, TextXSmall } from '../../assets/constants/Typography'
@@ -47,10 +47,11 @@ const SettingScreen = ({ navigation }) => {
                         </View>
                         <IconArrow style={styles.iconArrow} />
                     </Pressable>
-                    <Pressable style={styles.optionItem}>
+                    <Pressable style={styles.optionItem}
+                        onPress={() => { navigation.navigate("ChangePasswordScreen") }}>
                         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
                             <IconSecurity />
-                            <Text style={[TextMedium, { color: "#000" }]}>Security</Text>
+                            <Text style={[TextMedium, { color: "#000" }]}>Change Password</Text>
                         </View>
                         <IconArrow style={styles.iconArrow} />
                     </Pressable>

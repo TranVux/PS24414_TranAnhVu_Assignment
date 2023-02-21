@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation }) => {
 
     const [usename, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const { setIsLogin, setInfoUser } = useContext(AppContext);
+    const { setIsLogin, setInfoUser, setCurrentPass } = useContext(AppContext);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleLogin = async (usename, password) => {
@@ -29,7 +29,10 @@ const LoginScreen = ({ navigation }) => {
             if (!responseLogin.error) {
                 await AsyncStorage.setItem("token", responseLogin.data.token);
                 await AsyncStorage.setItem("infoUser", JSON.stringify(responseLogin.data.user));
-                console.log(responseLogin.data.token);
+                await AsyncStorage.setItem("password", password);
+                setCurrentPass(password);
+                // console.log(password);
+                // console.log(responseLogin.data.token);
                 setIsLogin(true);
                 setInfoUser(responseLogin.data.user);
                 console.log(responseLogin.data.user);

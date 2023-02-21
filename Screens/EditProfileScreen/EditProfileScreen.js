@@ -1,9 +1,9 @@
-import { Pressable, StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, Text, ToastAndroid, View } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { IconBack, IconChangeAvatar, IconCheck } from '../../assets/images'
-import { TextLarge, TextMedium, TextSmall } from '../../assets/constants/Typography'
+import { TextLarge, TextMedium, TextSmall, TextXSmall } from '../../assets/constants/Typography'
 import InputField from '../../Components/InputField'
 import { Fallback } from '../../assets/constants/Fallback'
 import Dialog from "react-native-dialog";
@@ -25,6 +25,8 @@ const EditProfileScreen = ({ navigation }) => {
     const [address, setAddress] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const { infoUser, setInfoUser } = useContext(AppContext);
+
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleEmail = (email) => {
         console.log(email);
@@ -91,6 +93,7 @@ const EditProfileScreen = ({ navigation }) => {
     }
 
     const handleUpdateProfile = async () => {
+        setIsLoading(true);
         try {
             let formData = new FormData();
             formData.append("image", {
@@ -120,10 +123,12 @@ const EditProfileScreen = ({ navigation }) => {
                 } else {
                     ToastAndroid.show("Change info failure!", ToastAndroid.SHORT);
                 }
+                setIsLoading(false);
             }
         } catch (err) {
             ToastAndroid.show("Change info failure!", ToastAndroid.SHORT);
             console.log(err);
+            setIsLoading(false);
         }
     }
 
@@ -136,6 +141,7 @@ const EditProfileScreen = ({ navigation }) => {
             showsVerticalScrollIndicator={false}
             keyboardShouldPersistTaps="always"
             style={{ flex: 1, backgroundColor: "#fff" }}
+            contentContainerStyle={{ flex: isLoading ? 1 : 0 }}
         >
             <SafeAreaView style={styles.screenContainer}>
                 <View style={styles.header}>
@@ -202,6 +208,15 @@ const EditProfileScreen = ({ navigation }) => {
                         onPress={() => { setDialogDisplay(false) }} />
                 </Dialog.Container>
             </SafeAreaView>
+
+            {isLoading &&
+                <View style={styles.styleDialog}>
+                    <View style={styles.dialogBox}>
+                        <ActivityIndicator size={'large'} color={Colors.primaryColor} />
+                        <Text style={[TextXSmall, { color: "#000" }]}>Please wait...</Text>
+                    </View>
+                </View>
+            }
         </KeyboardAwareScrollView>
     )
 }
@@ -240,6 +255,24 @@ const styles = StyleSheet.create({
         flex: 1,
         gap: 16
     },
-    inputStyle: {
+    styleDialog: {
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+        height: "100%",
+        backgroundColor: "#00000078",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: 10
+    },
+    dialogBox: {
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 20,
+        gap: 5,
+        elevation: 5
     }
 })

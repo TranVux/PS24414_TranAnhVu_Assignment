@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const NavigatorScreen = () => {
 
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false, }} sceneContainerStyle={styles.container} initialRouteName="Bookmark">
+        <Tab.Navigator screenOptions={{ headerShown: false, }} sceneContainerStyle={styles.container} initialRouteName="Home">
             <Tab.Screen options={{
                 tabBarIcon: ({ focused }) => {
                     return (

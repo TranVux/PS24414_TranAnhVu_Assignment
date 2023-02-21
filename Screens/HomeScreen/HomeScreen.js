@@ -45,6 +45,7 @@ const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         handleFetchData();
+        // console.log(currentPass);
         return () => { }
     }, [])
 
@@ -87,7 +88,7 @@ const HomeScreen = ({ navigation }) => {
                         <IconSearch />
                         <Text style={[TextSmall, { color: Colors.placeHolder }]}>Search</Text>
                     </Pressable>
-                    <Pressable onPress={() => { console.log("option button presss"); }}>
+                    <Pressable onPress={() => { console.log("filter button presss"); }}>
                         <IconOption />
                     </Pressable>
                 </View>

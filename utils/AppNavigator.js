@@ -10,6 +10,7 @@ import CreationScreen from '../Screens/CreationScreen'
 import EditProfileScreen from '../Screens/EditProfileScreen'
 import SettingScreen from '../Screens/SettingScreen'
 import SearchScreen from '../Screens/SearchScreen'
+import ChangePassScreen from '../Screens/ChangePassScreen'
 
 const Stack = createNativeStackNavigator();
 
@@ -29,10 +30,11 @@ const AppNavigator = () => {
                     <>
                         <Stack.Screen component={NavigatorScreen} name='NavigatorScreen' />
                         <Stack.Screen component={SettingScreen} name='SettingScreen' />
+                        <Stack.Screen component={ChangePassScreen} name="ChangePasswordScreen" />
+                        <Stack.Screen component={EditProfileScreen} name="EditProfileScreen" />
                         <Stack.Screen component={SearchScreen} name='SearchScreen' />
                         <Stack.Screen component={CreationScreen} name="CreationScreen" />
                         <Stack.Screen component={DetailScreen} name='DetailScreen' />
-                        <Stack.Screen component={EditProfileScreen} name="EditProfileScreen" />
                         <Stack.Screen component={FillProfileScreen} name='FillProfileScreen' />
                     </>
             }
