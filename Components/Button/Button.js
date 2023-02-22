@@ -1,9 +1,9 @@
 import { Pressable, StyleSheet } from 'react-native'
-import React from 'react'
+import React, { memo } from 'react'
 import { Colors } from '../../assets/constants/Colors';
 
 const Button = ({ disabled = false, children, width, height, style, primary, secondary, outline, onPress = () => { } }) => {
-    // console.log(width);
+    // console.log("Button: " + disabled);
     return (
         <Pressable
             disabled={disabled ? true : false}
@@ -25,7 +25,7 @@ const Button = ({ disabled = false, children, width, height, style, primary, sec
     )
 }
 
-export default Button
+export default memo(Button)
 
 const styles = StyleSheet.create({
     button: {

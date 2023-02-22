@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Text, ToastAndroid, View } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import { StyleSheet, Text, ToastAndroid, View } from 'react-native'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { SafeAreaView } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import InputField from '../../Components/InputField'
@@ -16,7 +16,6 @@ const ChangePassScreen = ({ navigation }) => {
 
     const { currentPass } = useContext(AppContext);
 
-    const [curentPassUser, setCurrentPassUser] = useState(currentPass)
     const [isLoading, setIsLoading] = useState(false);
 
     const [currentPassword, setPassword] = useState("");
@@ -27,6 +26,7 @@ const ChangePassScreen = ({ navigation }) => {
     const [errorNewPass, setErrorNewPass] = useState("");
     const [errorNewPassAgain, setErrorNewPassAgain] = useState("");
 
+    const [disabled, setDisabled] = useState(false);
 
     const handleChangeCurrentPassword = (newText) => {
         setPassword(newText);
@@ -42,7 +42,7 @@ const ChangePassScreen = ({ navigation }) => {
     }
 
     const handleErrorCurrentPass = () => {
-        if (currentPassword !== curentPassUser && currentPassword.length > 0) {
+        if (currentPassword !== currentPass && currentPassword.length > 0) {
             setError("Không đúng mật khẩu hiện tại");
         } else if (newPass !== newPassAgain && newPassAgain.length > 0) {
             setErrorNewPassAgain("Mật khẩu nhập vào không khớp với nhau")
@@ -51,30 +51,46 @@ const ChangePassScreen = ({ navigation }) => {
             setErrorNewPass("")
             setErrorNewPassAgain("")
         }
+        // console.log({
+        //     "Current Password: ": currentPassword,
+        //     "New Password: ": newPass,
+        //     "New Password Again: ": newPassAgain,
+        // });
     }
 
     const handleChangePass = async () => {
-        if (error.length === 0 && errorNewPass.length === 0 && errorNewPassAgain.length === 0) {
-            setIsLoading(true);
-            try {
-                const res = AxiosIntance().post("users/change-password", { password: newPassAgain })
-                if (!res.error) {
-                    await AsyncStorage.setItem("password", newPass);
-                    ToastAndroid.show("Password Change Success!", ToastAndroid.SHORT);
-                    navigation.goBack();
-                }
-                setIsLoading(false);
-            } catch (error) {
-                setIsLoading(false);
-                console.log(error);
+        // console.log("a");
+        setIsLoading(true);
+        try {
+            const res = AxiosIntance().post("users/change-password", { password: newPassAgain })
+            if (!res.error) {
+                await AsyncStorage.setItem("password", newPass);
+                ToastAndroid.show("Password Change Success!", ToastAndroid.SHORT);
+                navigation.goBack();
             }
+            setIsLoading(false);
+        } catch (error) {
+            setIsLoading(false);
+            console.log(error);
+        }
+    }
+
+    const handleButtonChangePass = () => {
+        if (
+            currentPassword.length > 0 && newPass.length > 0 && newPassAgain.length > 0 &&
+            error.length === 0 && errorNewPass.length === 0 && errorNewPassAgain.length === 0
+        ) {
+            setDisabled(false);
+        } else {
+            setDisabled(true);
         }
     }
 
     useEffect(() => {
-        // console.log(currentPass);
         handleErrorCurrentPass();
-    }, [currentPassword, newPass, newPassAgain])
+        handleButtonChangePass();
+        // console.log(disabled);
+    })
 
     return (
         <KeyboardAwareScrollView style={styles.container}
@@ -82,12 +98,11 @@ const ChangePassScreen = ({ navigation }) => {
                 flex: isLoading ? 1 : 0
             }}>
             <SafeAreaView style={{ flex: 1, padding: 20 }}>
-                <View style={{ flex: 0 }}>
+                <View style={{ flex: 1 }}>
                     <FastImage source={require('../../assets/images/20944201.jpg')} style={{ width: 200, aspectRatio: 1, alignSelf: "center", marginBottom: 20 }} />
                     <InputField
                         errorMessage={error}
                         onChangeText={(newText) => { handleChangeCurrentPassword(newText) }}
-                        value={currentPassword}
                         inputContainerStyle={styles.inputContainerStyle}
                         secureTextEntry={true}
                         importance
@@ -96,7 +111,6 @@ const ChangePassScreen = ({ navigation }) => {
                     <InputField
                         errorMessage={errorNewPass}
                         onChangeText={(newText) => { handleChangeNewPassword(newText) }}
-                        value={newPass}
                         inputContainerStyle={styles.inputContainerStyle}
                         secureTextEntry={true}
                         importance
@@ -105,15 +119,19 @@ const ChangePassScreen = ({ navigation }) => {
                     <InputField
                         errorMessage={errorNewPassAgain}
                         onChangeText={(newText) => { handleChangeNewPasswordAgain(newText) }}
-                        value={newPassAgain}
                         inputContainerStyle={styles.inputContainerStyle}
                         secureTextEntry={true}
                         importance
                         titleField={"Type New Password Again"} />
                 </View>
-                <View style={{ height: 55, marginTop: 50 }}>
-                    <Button style={{ height: 55 }} onPress={() => { handleChangePass() }}>
-                        <Text style={[LinkMediumBold, { color: "#fff" }]}>Change Password</Text>
+                <View style={{ height: 55, marginTop: 50, }}>
+                    <Button
+                        disabled={disabled}
+                        secondary={disabled}
+                        style={{ height: 55 }}
+                        onPress={handleChangePass}
+                    >
+                        <Text style={[LinkMediumBold, { color: !disabled ? "#fff" : Colors.buttonText }]}>Change Password</Text>
                     </Button>
                 </View>
             </SafeAreaView>

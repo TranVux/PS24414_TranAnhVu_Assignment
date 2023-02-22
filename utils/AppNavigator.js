@@ -29,8 +29,8 @@ const AppNavigator = () => {
                     </> :
                     <>
                         <Stack.Screen component={NavigatorScreen} name='NavigatorScreen' />
-                        <Stack.Screen component={SettingScreen} name='SettingScreen' />
                         <Stack.Screen component={ChangePassScreen} name="ChangePasswordScreen" />
+                        <Stack.Screen component={SettingScreen} name='SettingScreen' />
                         <Stack.Screen component={EditProfileScreen} name="EditProfileScreen" />
                         <Stack.Screen component={SearchScreen} name='SearchScreen' />
                         <Stack.Screen component={CreationScreen} name="CreationScreen" />

@@ -1,5 +1,5 @@
 import { Dimensions, Pressable, SafeAreaView, StyleSheet, Text, useWindowDimensions, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import ImageLoader from '../ImageLoader';
 import { LinkXSmallBold, TextMedium, TextXSmall } from '../../assets/constants/Typography';
 import { Colors } from '../../assets/constants/Colors';
@@ -80,7 +80,7 @@ const NewsCard = (
     )
 }
 
-export default NewsCard
+export default memo(NewsCard)
 
 const styles = StyleSheet.create({
     cardContainer: {
