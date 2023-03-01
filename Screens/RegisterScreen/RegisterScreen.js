@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, ToastAndroid, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import InputField from '../../Components/InputField'
 import { Colors } from '../../assets/constants/Colors'
 import BouncyCheckbox from 'react-native-bouncy-checkbox'
@@ -11,15 +11,46 @@ import AxiosIntance from '../../utils/AxiosIntance'
 
 const RegisterScreen = ({ navigation }) => {
 
-    const [usename, setUsername] = useState("");
+    const countUserName = useRef(0);
+    const countPassword = useRef(0);
+
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleRegister = async (usename, password) => {
+    const [userNameError, setUserNameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+
+    const handleError = () => {
+        if (username.length <= 0) {
+            setUserNameError("Không để trống username");
+        } else if (username.length <= 6) {
+            setUserNameError("Username phải có nhiều hơn 6 ký tự");
+        } else {
+            setUserNameError("")
+        }
+
+        if (password.length <= 0) {
+            setPasswordError("Không đc để trống password")
+        } else if (password.length <= 6) {
+            setPasswordError("Password phải có nhiều hơn 6 ký tự")
+        } else {
+            setPasswordError("")
+        }
+    }
+
+
+    const handleRegister = async (username, password) => {
+        countPassword.current++;
+        countUserName.current++;
+
+        handleError();
+        if (username.length <= 0 || password.length <= 0 || username.lenght <= 6 || password.lenght <= 6) return;
+
         try {
             setIsLoading(true);
             const responseRegister = await AxiosIntance().post(
-                "/users/register", { email: usename, password: password }
+                "/users/register", { email: username, password: password }
             );
             console.log(responseRegister);
             console.log(responseRegister.data.error);
@@ -38,15 +69,25 @@ const RegisterScreen = ({ navigation }) => {
         }
     }
 
-    const handleUserNameChange = (usename) => {
-        setUsername(usename);
-        console.log(usename);
+    const handleUserNameChange = (username) => {
+        setUsername(username);
+        console.log(username);
+        //count re-render
+        countUserName.current++;
     }
 
     const handlePasswordChange = (password) => {
         setPassword(password);
         console.log(password);
+        //count re-render
+        countPassword.current++;
     }
+
+    useEffect(() => {
+        if (countUserName.current > 0 && countPassword.current > 0) {
+            handleError();
+        }
+    }, [username, password])
 
     return (
         <KeyboardAwareScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}
@@ -63,8 +104,20 @@ const RegisterScreen = ({ navigation }) => {
                 </View>
                 <View style={styles.formContainer}>
                     {/* input field */}
-                    <InputField titleField="Username" secureTextEntry={false} inputContainerStyle={{ marginBottom: 16 }} onChangeText={(text) => { handleUserNameChange(text) }} />
-                    <InputField titleField="Password" secureTextEntry={true} onChangeText={(text) => { handlePasswordChange(text) }} />
+                    <InputField
+                        errorMessage={userNameError}
+                        titleField="Username"
+                        secureTextEntry={false}
+                        inputContainerStyle={{ marginBottom: 16 }}
+                        onChangeText={(text) => { handleUserNameChange(text) }}
+                    />
+
+                    <InputField
+                        errorMessage={passwordError}
+                        titleField="Password"
+                        secureTextEntry={true}
+                        onChangeText={(text) => { handlePasswordChange(text) }}
+                    />
                     {/*  */}
 
                     <View style={styles.optionFormContainer}>
@@ -86,7 +139,7 @@ const RegisterScreen = ({ navigation }) => {
                 <Button
                     style={{ marginTop: 18 }}
                     height={50}
-                    onPress={() => { handleRegister(usename, password) }}>
+                    onPress={() => { handleRegister(username, password) }}>
                     <Text style={[LinkMediumBold, , styles.textButton, {}]}>Register</Text>
                 </Button>
                 <Text style={[TextSmall, styles.continueText]}>or continue with</Text>
